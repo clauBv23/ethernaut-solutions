@@ -10,9 +10,12 @@ import {FalloutAttk} from "./LevelAttacks/02FalloutAttk.sol";
 import {Broadcasted} from "./LevelAttacks/Broadcasted.sol";
 
 contract RunLvlAttack is Script {
-    address EthernautCtr = 0xa3e7317E591D5A0F1c605be1b3aC4D2ae56104d6;
-    address lvl1Factory = 0x3c34A342b2aF5e885FcaA3800dB5B205fEfa3ffB;
-    address lvl2Factory = 0x676e57FdBbd8e5fE1A7A3f4Bb1296dAC880aa639;
+    address constant EthernautCtr = 0xa3e7317E591D5A0F1c605be1b3aC4D2ae56104d6;
+    address constant lvl1Factory = 0x3c34A342b2aF5e885FcaA3800dB5B205fEfa3ffB;
+    address constant lvl2Factory = 0x676e57FdBbd8e5fE1A7A3f4Bb1296dAC880aa639;
+
+    // todo could be easier to use but will imply storing all lvls on storage
+    // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
 
     function run(uint256 lvlNumber_) public {
         (
