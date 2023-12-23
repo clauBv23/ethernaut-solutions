@@ -19,22 +19,19 @@ contract RunLvlAttack is Script {
             address _lvlFactory,
             Broadcasted _attackCtr,
             uint256 _callValue
-        ) = _getLevelFactoryAttackCtrAndValue(lvlNumber_);
+        ) = getLevelFactoryAttackCtrAndValue(lvlNumber_);
 
         // create lvl instance
-        address payable _lvlInstance = _createLevel(_lvlFactory);
+        address payable _lvlInstance = createLevel(_lvlFactory);
 
         // attack lvl instance
-        _attackLevel(_lvlInstance, _attackCtr, _callValue);
+        attackLevel(_lvlInstance, _attackCtr, _callValue);
 
         // check lvl suceeded
-        _submitLevel(_lvlFactory, _lvlInstance);
+        submitLevel(_lvlFactory, _lvlInstance);
     }
 
-    function _createLevel(
-        address lvlFactory_
-    ) internal returns (address payable) {
-        vm.startBroadcast();
+    function createLevel(address lvlFactory_) public returns (address payable) {
         // get lvl instance
         vm.recordLogs();
         IEthernaut(EthernautCtr).createLevelInstance(lvlFactory_);
@@ -51,12 +48,11 @@ contract RunLvlAttack is Script {
         address _lvlInstance = address(
             uint160(uint256(_entries[_entriesLength].topics[2]))
         );
-        vm.stopBroadcast();
 
         return payable(_lvlInstance);
     }
 
-    function _submitLevel(address lvlFactory_, address lvlInstance_) internal {
+    function submitLevel(address lvlFactory_, address lvlInstance_) public {
         // validate lvl
         require(
             ILevelFactory(lvlFactory_).validateInstance(
@@ -64,34 +60,30 @@ contract RunLvlAttack is Script {
                 msg.sender
             )
         );
-        vm.startBroadcast();
         // submit lvl instance
         IEthernaut(EthernautCtr).submitLevelInstance(payable(lvlInstance_));
-        vm.stopBroadcast();
     }
 
-    function _attackLevel(
+    function attackLevel(
         address lvlInstance_,
         Broadcasted attackCtr_,
         uint256 value_
-    ) internal {
-        // deploy attack contract
-        // FallbackAttk _attackCtr = new FallbackAttk();
+    ) public {
         // call attack on lvl instance
         attackCtr_.broadcastedAttack{value: value_}(payable(lvlInstance_));
     }
 
-    function _getLevelFactoryAttackCtrAndValue(
+    function getLevelFactoryAttackCtrAndValue(
         uint256 lvlNumber_
     )
-        internal
+        public
         returns (address lvlFactory, Broadcasted lvlAttack, uint256 callValue)
     {
         if (lvlNumber_ == 1) {
-            // todo make the fallback contract Broadcasted
-            return (lvl1Factory, new FalloutAttk(), 0.00002 ether);
-            // return (new FallbackAttk(), 0.00002 ether);
+            console.log("01 Fallback level attack");
+            return (lvl1Factory, new FallbackAttk(), 0.00002 ether);
         } else if (lvlNumber_ == 2) {
+            console.log("02 Fallout level attack");
             return (lvl2Factory, new FalloutAttk(), 0);
         } else {
             revert("Not implemented");
