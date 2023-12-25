@@ -11,6 +11,7 @@ import {FalloutAttk} from "./LevelAttacks/02Fallout.sol";
 import {CoinFlipAttk} from "./LevelAttacks/03CoinFlip.sol";
 import {TelephoneAttk} from "./LevelAttacks/04Telephone.sol";
 import {TokenAttack} from "./LevelAttacks/05Token.sol";
+import {DelegationAttk} from "./LevelAttacks/06Delegation.sol";
 
 contract RunLvlAttack is Script {
     // address in Sepolia
@@ -20,6 +21,7 @@ contract RunLvlAttack is Script {
     address constant lvl3Factory = 0xA62fE5344FE62AdC1F356447B669E9E6D10abaaF;
     address constant lvl4Factory = 0x2C2307bb8824a0AbBf2CC7D76d8e63374D2f8446;
     address constant lvl5Factory = 0x478f3476358Eb166Cb7adE4666d04fbdDB56C407;
+    address constant lvl6Factory = 0x73379d8B82Fda494ee59555f333DF7D44483fD58;
 
     // todo could be easier to use but will imply storing all lvls on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
@@ -45,6 +47,7 @@ contract RunLvlAttack is Script {
         if (needBroadcast) {
             vm.stopBroadcast();
         }
+
         // check lvl suceeded
         vm.startBroadcast();
         submitLevel(_lvlFactory, _lvlInstance);
@@ -122,6 +125,9 @@ contract RunLvlAttack is Script {
         } else if (lvlNumber_ == 5) {
             console.log("05 Token level attack");
             return (lvl5Factory, new TokenAttack(), 0, false);
+        } else if (lvlNumber_ == 6) {
+            console.log("06 Delegation level attack");
+            return (lvl6Factory, new DelegationAttk(), 0, false);
         } else {
             revert("Not implemented");
         }
