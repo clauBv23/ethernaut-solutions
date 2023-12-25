@@ -23,20 +23,26 @@ contract RunLvlAttack is Script {
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
 
     function run(uint256 lvlNumber_) public {
+        vm.startBroadcast();
         (
             address _lvlFactory,
             Broadcasted _attackCtr,
-            uint256 _callValue
+            uint256 _callValue,
+            bool needBroadcast
         ) = getLevelFactoryAttackCtrAndValue(lvlNumber_);
 
         // create lvl instance
-        vm.startBroadcast();
         address payable _lvlInstance = createLevel(_lvlFactory);
         vm.stopBroadcast();
 
         // attack lvl instance
+        if (needBroadcast) {
+            vm.startBroadcast();
+        }
         attackLevel(_lvlInstance, _attackCtr, _callValue);
-
+        if (needBroadcast) {
+            vm.stopBroadcast();
+        }
         // check lvl suceeded
         vm.startBroadcast();
         submitLevel(_lvlFactory, _lvlInstance);
@@ -89,14 +95,19 @@ contract RunLvlAttack is Script {
         uint256 lvlNumber_
     )
         public
-        returns (address lvlFactory, Broadcasted lvlAttack, uint256 callValue)
+        returns (
+            address lvlFactory,
+            Broadcasted lvlAttack,
+            uint256 callValue,
+            bool needBroadcast
+        )
     {
         if (lvlNumber_ == 1) {
             console.log("01 Fallback level attack");
-            return (lvl1Factory, new FallbackAttk(), 0.00002 ether);
+            return (lvl1Factory, new FallbackAttk(), 0.00002 ether, false);
         } else if (lvlNumber_ == 2) {
             console.log("02 Fallout level attack");
-            return (lvl2Factory, new FalloutAttk(), 0);
+            return (lvl2Factory, new FalloutAttk(), 0, false);
         }
         // else if (lvlNumber_ == 3) {
         // todo lvl3 need calls on different blocks look a workaround
@@ -105,7 +116,7 @@ contract RunLvlAttack is Script {
         // }
         else if (lvlNumber_ == 4) {
             console.log("04 Telephone level attack");
-            return (lvl4Factory, new TelephoneAttk(), 0);
+            return (lvl4Factory, new TelephoneAttk(), 0, true);
         } else {
             revert("Not implemented");
         }
