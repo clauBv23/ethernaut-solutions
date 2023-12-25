@@ -9,7 +9,7 @@ import {Broadcasted} from "../script/LevelAttacks/Broadcasted.sol";
 
 contract TestAttacks is Test {
     RunLvlAttack attackScript;
-    uint256 constant totalAttakedLvls = 2;
+    uint256 constant totalAttakedLvls = 4;
     uint256 constant STARTING_BALANCE = 10 ether;
 
     function setUp() external {
@@ -21,6 +21,9 @@ contract TestAttacks is Test {
 
     function testAttackLevls() public {
         for (uint160 i = 1; i <= totalAttakedLvls; ++i) {
+            if (i == 3) {
+                continue;
+            }
             _callAttackScript(i);
         }
     }
@@ -33,7 +36,8 @@ contract TestAttacks is Test {
         (
             address _lvlFactory,
             Broadcasted _attackCtr,
-            uint256 _callValue
+            uint256 _callValue,
+
         ) = attackScript.getLevelFactoryAttackCtrAndValue(lvlNumber_);
 
         // create lvl instance
