@@ -6,11 +6,11 @@ import {Vm} from "forge-std/Vm.sol";
 import {Script, console} from "forge-std/Script.sol";
 
 import {Broadcasted} from "./LevelAttacks/Broadcasted.sol";
-import {FallbackAttk} from "./LevelAttacks/01FallbackAttk.sol";
-import {FalloutAttk} from "./LevelAttacks/02FalloutAttk.sol";
-import {CoinFlipAttk} from "./LevelAttacks/03CoinFlipAttk.sol";
-import {TelephoneAttk} from "./LevelAttacks/04TelephoneAttk.sol";
-import {TokenAttack} from "./LevelAttacks/05TokenAttack.sol";
+import {FallbackAttk} from "./LevelAttacks/01Fallback.sol";
+import {FalloutAttk} from "./LevelAttacks/02Fallout.sol";
+import {CoinFlipAttk} from "./LevelAttacks/03CoinFlip.sol";
+import {TelephoneAttk} from "./LevelAttacks/04Telephone.sol";
+import {TokenAttack} from "./LevelAttacks/05Token.sol";
 
 contract RunLvlAttack is Script {
     // address in Sepolia
