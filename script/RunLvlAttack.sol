@@ -144,7 +144,7 @@ contract RunLvlAttack is Script {
         // }
         else if (lvlNumber_ == 4) {
             console.log("04 Telephone level attack");
-            lvlFactory = LVL_1_FACTORY;
+            lvlFactory = LVL_4_FACTORY;
             lvlAttack = new TelephoneAttk();
             needBroadcast = true;
         } else if (lvlNumber_ == 5) {
