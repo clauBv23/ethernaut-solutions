@@ -17,6 +17,7 @@ import {VaultAttk} from "./LevelAttacks/08Vault.sol";
 import {KingAttk} from "./LevelAttacks/09King.sol";
 import {ReentrancyAttk} from "./LevelAttacks/10Reentrancy.sol";
 import {ElevatorAttk} from "./LevelAttacks/11Elevator.sol";
+import {PrivacyAttk} from "./LevelAttacks/12Privacy.sol";
 
 contract RunLvlAttack is Script {
     uint256 constant c_someEther = 0.00001 ether;
@@ -36,6 +37,8 @@ contract RunLvlAttack is Script {
         0x2a24869323C0B13Dff24E196Ba072dC790D52479;
     address constant LVL_11_FACTORY =
         0x6DcE47e94Fa22F8E2d8A7FDf538602B1F86aBFd2;
+    address constant LVL_12_FACTORY =
+        0x131c3249e115491E83De375171767Af07906eA36;
 
     // todo could be easier to use but will imply storing all lvls on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
@@ -183,6 +186,10 @@ contract RunLvlAttack is Script {
             lvlFactory = LVL_11_FACTORY;
             lvlAttack = new ElevatorAttk();
             needBroadcast = true;
+        } else if (lvlNumber_ == 12) {
+            console.log("12 Privacy level attack");
+            lvlFactory = LVL_12_FACTORY;
+            lvlAttack = new PrivacyAttk();
         } else {
             revert("Not implemented");
         }
