@@ -20,6 +20,7 @@ import {ElevatorAttk} from "./LevelAttacks/11Elevator.sol";
 import {PrivacyAttk} from "./LevelAttacks/12Privacy.sol";
 import {GatekeeperOneAttk} from "./LevelAttacks/13GatekeeperOne.sol";
 import {GatekeeperTwoAttk} from "./LevelAttacks/14GatekeeperTwo.sol";
+import {NaughtCoinAttk, INaughtCoin} from "./LevelAttacks/15NaughtCoin.sol";
 
 contract RunLvlAttack is Script {
     uint256 constant c_someEther = 0.00001 ether;
@@ -45,6 +46,8 @@ contract RunLvlAttack is Script {
         0xb5858B8EDE0030e46C0Ac1aaAedea8Fb71EF423C;
     address constant LVL_14_FACTORY =
         0x0C791D1923c738AC8c4ACFD0A60382eE5FF08a23;
+    address constant LVL_15_FACTORY =
+        0x80934BE6B8B872B364b470Ca30EaAd8AEAC4f63F;
 
     // todo could be easier to use but will imply storing all lvls on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
@@ -128,6 +131,13 @@ contract RunLvlAttack is Script {
                 attackCtr_ = new GatekeeperTwoAttk(payable(lvlInstance_));
             }
         } else {
+            if (lvlNumber_ == 15) {
+                //need extra configuration for appoval
+                INaughtCoin(lvlInstance_).approve(
+                    address(attackCtr_),
+                    INaughtCoin(lvlInstance_).balanceOf(msg.sender)
+                );
+            }
             attackCtr_.broadcastedAttack{value: value_}(payable(lvlInstance_));
         }
     }
@@ -213,6 +223,11 @@ contract RunLvlAttack is Script {
             console.log("14 Gate Kepper Two level attack");
             lvlFactory = LVL_14_FACTORY;
             // lvlAttack = new GatekeeperTwoAttk();  no create the contrct cuz the attack is in the constructor
+            needBroadcast = true;
+        } else if (lvlNumber_ == 15) {
+            console.log("15 Naught Coin level attack");
+            lvlFactory = LVL_15_FACTORY;
+            lvlAttack = new NaughtCoinAttk();
             needBroadcast = true;
         } else {
             revert("Not implemented");
