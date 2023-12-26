@@ -20,3 +20,5 @@ contract ForceAttk is Broadcasted {
 
     receive() external payable {}
 }
+
+// ! you can send ether to any adddress by calling selfdestruct in a contract with balance

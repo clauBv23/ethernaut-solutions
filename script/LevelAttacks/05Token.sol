@@ -11,5 +11,7 @@ contract TokenAttack is Broadcasted {
 }
 
 interface IToken {
+    // ! your balance is 20, in order to get more have to overflow the uint256 by sending more than you have
+    // ! 20 -21 = will overflow resulting in 2^256-1 a really big number
     function transfer(address _to, uint256 _value) external returns (bool);
 }

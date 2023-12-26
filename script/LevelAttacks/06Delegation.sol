@@ -14,3 +14,7 @@ contract DelegationAttk is Broadcasted {
         return abi.encodeWithSignature("pwn()");
     }
 }
+
+// ! Delegate and Delegation contracts have owner on the pos 0 of the storage
+// ! by alling pwn() in Delagation will call the function in Delegate and change
+// ! the owner of the contract in the sender contract (Delegation) thats how delegatecall works
