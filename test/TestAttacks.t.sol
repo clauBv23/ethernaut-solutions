@@ -9,7 +9,7 @@ import {Broadcasted} from "../script/LevelAttacks/Broadcasted.sol";
 
 contract TestAttacks is Test {
     RunLvlAttack attackScript;
-    uint256 constant totalAttakedLvls = 13;
+    uint256 constant totalAttakedLvls = 14;
     uint256 constant STARTING_BALANCE = 10 ether;
 
     function setUp() external {
