@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.19;
 
@@ -14,6 +14,7 @@ import {TokenAttack} from "./LevelAttacks/05Token.sol";
 import {DelegationAttk} from "./LevelAttacks/06Delegation.sol";
 import {ForceAttk} from "./LevelAttacks/07Force.sol";
 import {VaultAttk} from "./LevelAttacks/08Vault.sol";
+import {KingAttk} from "./LevelAttacks/09King.sol";
 
 contract RunLvlAttack is Script {
     // address in Sepolia
@@ -26,6 +27,7 @@ contract RunLvlAttack is Script {
     address constant lvl6Factory = 0x73379d8B82Fda494ee59555f333DF7D44483fD58;
     address constant lvl7Factory = 0xb6c2Ec883DaAac76D8922519E63f875c2ec65575;
     address constant lvl8Factory = 0xB7257D8Ba61BD1b3Fb7249DCd9330a023a5F3670;
+    address constant lvl9Factory = 0x3049C00639E6dfC269ED1451764a046f7aE500c6;
 
     // todo could be easier to use but will imply storing all lvls on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
@@ -36,19 +38,20 @@ contract RunLvlAttack is Script {
             address _lvlFactory,
             Broadcasted _attackCtr,
             uint256 _callValue,
-            bool needBroadcast
+            bool _needBroadcast,
+            uint256 _createValue
         ) = getLevelFactoryAttackCtrAndValue(lvlNumber_);
 
         // create lvl instance
-        address payable _lvlInstance = createLevel(_lvlFactory);
+        address payable _lvlInstance = createLevel(_lvlFactory, _createValue);
         vm.stopBroadcast();
 
         // attack lvl instance
-        if (needBroadcast) {
+        if (_needBroadcast) {
             vm.startBroadcast();
         }
         attackLevel(_lvlInstance, _attackCtr, _callValue);
-        if (needBroadcast) {
+        if (_needBroadcast) {
             vm.stopBroadcast();
         }
 
@@ -58,11 +61,15 @@ contract RunLvlAttack is Script {
         vm.stopBroadcast();
     }
 
-    function createLevel(address lvlFactory_) public returns (address payable) {
+    function createLevel(
+        address lvlFactory_,
+        uint256 createValue_
+    ) public returns (address payable) {
         // get lvl instance
         vm.recordLogs();
-        IEthernaut(EthernautCtr).createLevelInstance(lvlFactory_);
-
+        IEthernaut(EthernautCtr).createLevelInstance{value: createValue_}(
+            lvlFactory_
+        );
         Vm.Log[] memory _entries = vm.getRecordedLogs();
         uint256 _entriesLength = _entries.length - 1;
         require(_entries.length > 0, "No event emited");
@@ -108,15 +115,16 @@ contract RunLvlAttack is Script {
             address lvlFactory,
             Broadcasted lvlAttack,
             uint256 callValue,
-            bool needBroadcast
+            bool needBroadcast,
+            uint256 createValue
         )
     {
         if (lvlNumber_ == 1) {
             console.log("01 Fallback level attack");
-            return (lvl1Factory, new FallbackAttk(), 0.00002 ether, false);
+            return (lvl1Factory, new FallbackAttk(), 0.00002 ether, false, 0);
         } else if (lvlNumber_ == 2) {
             console.log("02 Fallout level attack");
-            return (lvl2Factory, new FalloutAttk(), 0, false);
+            return (lvl2Factory, new FalloutAttk(), 0, false, 0);
         }
         // else if (lvlNumber_ == 3) {
         // todo lvl3 need calls on different blocks look a workaround
@@ -125,24 +133,34 @@ contract RunLvlAttack is Script {
         // }
         else if (lvlNumber_ == 4) {
             console.log("04 Telephone level attack");
-            return (lvl4Factory, new TelephoneAttk(), 0, true);
+            return (lvl4Factory, new TelephoneAttk(), 0, true, 0);
         } else if (lvlNumber_ == 5) {
             console.log("05 Token level attack");
-            return (lvl5Factory, new TokenAttack(), 0, false);
+            return (lvl5Factory, new TokenAttack(), 0, false, 0);
         } else if (lvlNumber_ == 6) {
             console.log("06 Delegation level attack");
-            return (lvl6Factory, new DelegationAttk(), 0, false);
+            return (lvl6Factory, new DelegationAttk(), 0, false, 0);
         } else if (lvlNumber_ == 7) {
             console.log("07 Force level attack");
             return (
                 lvl7Factory,
                 new ForceAttk{value: 0.00001 ether}(),
                 0,
-                true
+                true,
+                0
             );
         } else if (lvlNumber_ == 8) {
             console.log("08 Vault level attack");
-            return (lvl8Factory, new VaultAttk(), 0, false);
+            return (lvl8Factory, new VaultAttk(), 0, false, 0);
+        } else if (lvlNumber_ == 9) {
+            console.log("09 King level attack");
+            return (
+                lvl9Factory,
+                new KingAttk(),
+                0.001 ether,
+                true,
+                0.001 ether
+            );
         } else {
             revert("Not implemented");
         }
