@@ -15,8 +15,11 @@ import {DelegationAttk} from "./LevelAttacks/06Delegation.sol";
 import {ForceAttk} from "./LevelAttacks/07Force.sol";
 import {VaultAttk} from "./LevelAttacks/08Vault.sol";
 import {KingAttk} from "./LevelAttacks/09King.sol";
+import {ReentrancyAttk} from "./LevelAttacks/10Reentrancy.sol";
 
 contract RunLvlAttack is Script {
+    uint256 constant c_someEther = 0.00001 ether;
+    uint256 constant c_etherValue = 0.001 ether;
     // address in Sepolia
     address constant EthernautCtr = 0xa3e7317E591D5A0F1c605be1b3aC4D2ae56104d6;
     address constant lvl1Factory = 0x3c34A342b2aF5e885FcaA3800dB5B205fEfa3ffB;
@@ -28,6 +31,7 @@ contract RunLvlAttack is Script {
     address constant lvl7Factory = 0xb6c2Ec883DaAac76D8922519E63f875c2ec65575;
     address constant lvl8Factory = 0xB7257D8Ba61BD1b3Fb7249DCd9330a023a5F3670;
     address constant lvl9Factory = 0x3049C00639E6dfC269ED1451764a046f7aE500c6;
+    address constant lvl10Factory = 0x2a24869323C0B13Dff24E196Ba072dC790D52479;
 
     // todo could be easier to use but will imply storing all lvls on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
@@ -123,7 +127,7 @@ contract RunLvlAttack is Script {
             console.log("01 Fallback level attack");
             lvlFactory = lvl1Factory;
             lvlAttack = new FallbackAttk();
-            callValue = 0.00002 ether;
+            callValue = 2 * c_someEther;
         } else if (lvlNumber_ == 2) {
             console.log("02 Fallout level attack");
             lvlFactory = lvl2Factory;
@@ -150,7 +154,7 @@ contract RunLvlAttack is Script {
         } else if (lvlNumber_ == 7) {
             console.log("07 Force level attack");
             lvlFactory = lvl7Factory;
-            lvlAttack = new ForceAttk{value: 0.00001 ether}();
+            lvlAttack = new ForceAttk{value: c_someEther}();
             needBroadcast = true;
         } else if (lvlNumber_ == 8) {
             console.log("08 Vault level attack");
@@ -160,9 +164,16 @@ contract RunLvlAttack is Script {
             console.log("09 King level attack");
             lvlFactory = lvl9Factory;
             lvlAttack = new KingAttk();
-            callValue = 0.001 ether;
+            callValue = c_etherValue;
             needBroadcast = true;
-            createValue = 0.001 ether;
+            createValue = c_etherValue;
+        } else if (lvlNumber_ == 10) {
+            console.log("10 Reentrancy level attack");
+            lvlFactory = lvl10Factory;
+            lvlAttack = new ReentrancyAttk();
+            callValue = c_etherValue;
+            needBroadcast = true;
+            createValue = c_etherValue;
         } else {
             revert("Not implemented");
         }
