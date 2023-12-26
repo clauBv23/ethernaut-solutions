@@ -48,7 +48,12 @@ contract TestAttacks is Test {
             _createValue
         );
         // attack lvl instance
-        attackScript.attackLevel(_lvlInstance, _attackCtr, _callValue);
+        attackScript.attackLevel(
+            _lvlInstance,
+            _attackCtr,
+            _callValue,
+            lvlNumber_
+        );
         // check lvl suceeded
         vm.prank(msg.sender);
         attackScript.submitLevel(_lvlFactory, _lvlInstance);

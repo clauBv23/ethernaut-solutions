@@ -18,7 +18,8 @@ import {KingAttk} from "./LevelAttacks/09King.sol";
 import {ReentrancyAttk} from "./LevelAttacks/10Reentrancy.sol";
 import {ElevatorAttk} from "./LevelAttacks/11Elevator.sol";
 import {PrivacyAttk} from "./LevelAttacks/12Privacy.sol";
-import {GateKeeperOneAttk} from "./LevelAttacks/13GateKeeperOne.sol";
+import {GatekeeperOneAttk} from "./LevelAttacks/13GatekeeperOne.sol";
+import {GatekeeperTwoAttk} from "./LevelAttacks/14GatekeeperTwo.sol";
 
 contract RunLvlAttack is Script {
     uint256 constant c_someEther = 0.00001 ether;
@@ -42,6 +43,8 @@ contract RunLvlAttack is Script {
         0x131c3249e115491E83De375171767Af07906eA36;
     address constant LVL_13_FACTORY =
         0xb5858B8EDE0030e46C0Ac1aaAedea8Fb71EF423C;
+    address constant LVL_14_FACTORY =
+        0x0C791D1923c738AC8c4ACFD0A60382eE5FF08a23;
 
     // todo could be easier to use but will imply storing all lvls on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
@@ -64,7 +67,7 @@ contract RunLvlAttack is Script {
         if (_needBroadcast) {
             vm.startBroadcast();
         }
-        attackLevel(_lvlInstance, _attackCtr, _callValue);
+        attackLevel(_lvlInstance, _attackCtr, _callValue, lvlNumber_);
         if (_needBroadcast) {
             vm.stopBroadcast();
         }
@@ -115,10 +118,18 @@ contract RunLvlAttack is Script {
     function attackLevel(
         address lvlInstance_,
         Broadcasted attackCtr_,
-        uint256 value_
+        uint256 value_,
+        uint256 lvlNumber_
     ) public {
         // call attack on lvl instance
-        attackCtr_.broadcastedAttack{value: value_}(payable(lvlInstance_));
+        if (attackCtr_ == Broadcasted(address(0))) {
+            // there is not deployed attack contract the attack is in the constructor
+            if (lvlNumber_ == 14) {
+                attackCtr_ = new GatekeeperTwoAttk(payable(lvlInstance_));
+            }
+        } else {
+            attackCtr_.broadcastedAttack{value: value_}(payable(lvlInstance_));
+        }
     }
 
     function getLevelFactoryAttackCtrAndValue(
@@ -196,7 +207,12 @@ contract RunLvlAttack is Script {
         } else if (lvlNumber_ == 13) {
             console.log("13 Gate Kepper One level attack");
             lvlFactory = LVL_13_FACTORY;
-            lvlAttack = new GateKeeperOneAttk();
+            lvlAttack = new GatekeeperOneAttk();
+            needBroadcast = true;
+        } else if (lvlNumber_ == 14) {
+            console.log("14 Gate Kepper Two level attack");
+            lvlFactory = LVL_14_FACTORY;
+            // lvlAttack = new GatekeeperTwoAttk();
             needBroadcast = true;
         } else {
             revert("Not implemented");

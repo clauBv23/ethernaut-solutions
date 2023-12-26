@@ -5,7 +5,7 @@ pragma solidity ^0.8.19;
 import {Broadcasted} from "./Broadcasted.sol";
 import {console} from "forge-std/Script.sol";
 
-contract GateKeeperOneAttk is Broadcasted {
+contract GatekeeperOneAttk is Broadcasted {
     function attack(address payable gateKeeperOneCtr_) public payable override {
         bytes8 k = bytes8(uint64(uint16(uint160(tx.origin))) + 2 ** 32);
         for (uint256 i = 200; i <= 500; i++) {
