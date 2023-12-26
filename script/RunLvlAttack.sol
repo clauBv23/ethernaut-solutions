@@ -16,6 +16,7 @@ import {ForceAttk} from "./LevelAttacks/07Force.sol";
 import {VaultAttk} from "./LevelAttacks/08Vault.sol";
 import {KingAttk} from "./LevelAttacks/09King.sol";
 import {ReentrancyAttk} from "./LevelAttacks/10Reentrancy.sol";
+import {ElevatorAttk} from "./LevelAttacks/11Elevator.sol";
 
 contract RunLvlAttack is Script {
     uint256 constant c_someEther = 0.00001 ether;
@@ -33,6 +34,8 @@ contract RunLvlAttack is Script {
     address constant LVL_9_FACTORY = 0x3049C00639E6dfC269ED1451764a046f7aE500c6;
     address constant LVL_10_FACTORY =
         0x2a24869323C0B13Dff24E196Ba072dC790D52479;
+    address constant LVL_11_FACTORY =
+        0x6DcE47e94Fa22F8E2d8A7FDf538602B1F86aBFd2;
 
     // todo could be easier to use but will imply storing all lvls on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
@@ -175,6 +178,11 @@ contract RunLvlAttack is Script {
             callValue = c_etherValue;
             needBroadcast = true;
             createValue = c_etherValue;
+        } else if (lvlNumber_ == 11) {
+            console.log("11 Elevator level attack");
+            lvlFactory = LVL_11_FACTORY;
+            lvlAttack = new ElevatorAttk();
+            needBroadcast = true;
         } else {
             revert("Not implemented");
         }
