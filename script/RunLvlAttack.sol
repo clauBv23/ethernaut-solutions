@@ -121,10 +121,13 @@ contract RunLvlAttack is Script {
     {
         if (lvlNumber_ == 1) {
             console.log("01 Fallback level attack");
-            return (lvl1Factory, new FallbackAttk(), 0.00002 ether, false, 0);
+            lvlFactory = lvl1Factory;
+            lvlAttack = new FallbackAttk();
+            callValue = 0.00002 ether;
         } else if (lvlNumber_ == 2) {
             console.log("02 Fallout level attack");
-            return (lvl2Factory, new FalloutAttk(), 0, false, 0);
+            lvlFactory = lvl2Factory;
+            lvlAttack = new FalloutAttk();
         }
         // else if (lvlNumber_ == 3) {
         // todo lvl3 need calls on different blocks look a workaround
@@ -133,34 +136,33 @@ contract RunLvlAttack is Script {
         // }
         else if (lvlNumber_ == 4) {
             console.log("04 Telephone level attack");
-            return (lvl4Factory, new TelephoneAttk(), 0, true, 0);
+            lvlFactory = lvl4Factory;
+            lvlAttack = new TelephoneAttk();
+            needBroadcast = true;
         } else if (lvlNumber_ == 5) {
             console.log("05 Token level attack");
-            return (lvl5Factory, new TokenAttack(), 0, false, 0);
+            lvlFactory = lvl5Factory;
+            lvlAttack = new TokenAttack();
         } else if (lvlNumber_ == 6) {
             console.log("06 Delegation level attack");
-            return (lvl6Factory, new DelegationAttk(), 0, false, 0);
+            lvlFactory = lvl6Factory;
+            lvlAttack = new DelegationAttk();
         } else if (lvlNumber_ == 7) {
             console.log("07 Force level attack");
-            return (
-                lvl7Factory,
-                new ForceAttk{value: 0.00001 ether}(),
-                0,
-                true,
-                0
-            );
+            lvlFactory = lvl7Factory;
+            lvlAttack = new ForceAttk{value: 0.00001 ether}();
+            needBroadcast = true;
         } else if (lvlNumber_ == 8) {
             console.log("08 Vault level attack");
-            return (lvl8Factory, new VaultAttk(), 0, false, 0);
+            lvlFactory = lvl8Factory;
+            lvlAttack = new VaultAttk();
         } else if (lvlNumber_ == 9) {
             console.log("09 King level attack");
-            return (
-                lvl9Factory,
-                new KingAttk(),
-                0.001 ether,
-                true,
-                0.001 ether
-            );
+            lvlFactory = lvl9Factory;
+            lvlAttack = new KingAttk();
+            callValue = 0.001 ether;
+            needBroadcast = true;
+            createValue = 0.001 ether;
         } else {
             revert("Not implemented");
         }
