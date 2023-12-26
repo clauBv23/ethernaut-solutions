@@ -212,7 +212,7 @@ contract RunLvlAttack is Script {
         } else if (lvlNumber_ == 14) {
             console.log("14 Gate Kepper Two level attack");
             lvlFactory = LVL_14_FACTORY;
-            // lvlAttack = new GatekeeperTwoAttk();
+            // lvlAttack = new GatekeeperTwoAttk();  no create the contrct cuz the attack is in the constructor
             needBroadcast = true;
         } else {
             revert("Not implemented");
