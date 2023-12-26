@@ -12,6 +12,7 @@ import {CoinFlipAttk} from "./LevelAttacks/03CoinFlip.sol";
 import {TelephoneAttk} from "./LevelAttacks/04Telephone.sol";
 import {TokenAttack} from "./LevelAttacks/05Token.sol";
 import {DelegationAttk} from "./LevelAttacks/06Delegation.sol";
+import {ForceAttk} from "./LevelAttacks/07Force.sol";
 
 contract RunLvlAttack is Script {
     // address in Sepolia
@@ -22,6 +23,7 @@ contract RunLvlAttack is Script {
     address constant lvl4Factory = 0x2C2307bb8824a0AbBf2CC7D76d8e63374D2f8446;
     address constant lvl5Factory = 0x478f3476358Eb166Cb7adE4666d04fbdDB56C407;
     address constant lvl6Factory = 0x73379d8B82Fda494ee59555f333DF7D44483fD58;
+    address constant lvl7Factory = 0xb6c2Ec883DaAac76D8922519E63f875c2ec65575;
 
     // todo could be easier to use but will imply storing all lvls on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
@@ -128,6 +130,14 @@ contract RunLvlAttack is Script {
         } else if (lvlNumber_ == 6) {
             console.log("06 Delegation level attack");
             return (lvl6Factory, new DelegationAttk(), 0, false);
+        } else if (lvlNumber_ == 7) {
+            console.log("07 Force level attack");
+            return (
+                lvl7Factory,
+                new ForceAttk{value: 0.00001 ether}(),
+                0,
+                true
+            );
         } else {
             revert("Not implemented");
         }
