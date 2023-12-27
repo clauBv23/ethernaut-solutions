@@ -8,19 +8,19 @@ import {RunLvlAttack} from "../script/RunLvlAttack.sol";
 import {Broadcasted} from "../script/LevelAttacks/Broadcasted.sol";
 
 contract TestAttacks is Test {
-    RunLvlAttack attackScript;
-    uint256 constant totalAttakedLvls = 18;
+    RunLvlAttack s_attackScript;
+    uint256 constant s_totalAttackedLevels = 18;
     uint256 constant STARTING_BALANCE = 10 ether;
 
     function setUp() external {
-        attackScript = new RunLvlAttack();
+        s_attackScript = new RunLvlAttack();
         // funding attack script contract and msg.sender
         vm.deal(msg.sender, STARTING_BALANCE);
-        vm.deal(address(attackScript), STARTING_BALANCE);
+        vm.deal(address(s_attackScript), STARTING_BALANCE);
     }
 
-    function testAttackLevls() public {
-        for (uint160 i = 15; i <= 15; ++i) {
+    function testAttackLevels() public {
+        for (uint160 i = 1; i <= s_totalAttackedLevels; ++i) {
             if (i == 3) {
                 continue;
             }
@@ -35,8 +35,8 @@ contract TestAttacks is Test {
     function _callAttackScript(uint256 lvlNumber_) internal {
         // it simulates the run function in the script, but send the transactions
         // signed by the msg.sender not the Test contract
-        // same behaviour could be achieved by calling prank before the run function,
-        // but that can't be done due to there is a broadcast inside the script when attaking
+        // same behavior could be achieved by calling prank before the run function,
+        // but that can't be done due to there is a broadcast inside the script when attacking
         vm.startBroadcast(msg.sender);
         (
             address _lvlFactory,
@@ -44,11 +44,11 @@ contract TestAttacks is Test {
             uint256 _callValue,
             bool _needBroadcast,
             uint256 _createValue
-        ) = attackScript.getLevelFactoryAttackCtrAndValue(lvlNumber_);
+        ) = s_attackScript.getLevelFactoryAttackCtrAndValue(lvlNumber_);
 
         // create lvl instance
         // vm.prank(msg.sender);
-        address payable _lvlInstance = attackScript.createLevel(
+        address payable _lvlInstance = s_attackScript.createLevel(
             _lvlFactory,
             _createValue
         );
@@ -58,7 +58,7 @@ contract TestAttacks is Test {
             vm.startBroadcast(msg.sender);
         }
         // attack lvl instance
-        attackScript.attackLevel(
+        s_attackScript.attackLevel(
             _lvlInstance,
             _attackCtr,
             _callValue,
@@ -67,10 +67,10 @@ contract TestAttacks is Test {
         if (_needBroadcast) {
             vm.stopBroadcast();
         }
-        // check lvl suceeded
+        // check lvl succeeded
         // vm.prank(msg.sender);
         vm.startBroadcast(msg.sender);
-        attackScript.submitLevel(_lvlFactory, _lvlInstance);
+        s_attackScript.submitLevel(_lvlFactory, _lvlInstance);
         vm.stopBroadcast();
     }
 }
