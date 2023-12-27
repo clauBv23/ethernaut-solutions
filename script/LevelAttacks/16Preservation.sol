@@ -41,10 +41,15 @@ contract PreservationAttk is Broadcasted {
     }
 }
 
+//! the fist time the setFirstTime function is called the timestamp is set to the corrupted library address
+//! this is done because this function is called via delegate call and the caller contract storage is changed
 interface IPreservation {
     function setFirstTime(uint timeStamp_) external;
 }
 
+//! this corrupted library sets the owner to the tx.origin account
+//! due to this function is being called via delegate call, this will change the contract caller storage
+//! resulting in the lvl instance being changed to the tx.origin account
 contract MyLibrary {
     // stores a timestamp
     address public s_randomAddr1; // random address to fill slots
