@@ -23,6 +23,7 @@ import {GatekeeperTwoAttk} from "./LevelAttacks/14GatekeeperTwo.sol";
 import {NaughtCoinAttk, INaughtCoin} from "./LevelAttacks/15NaughtCoin.sol";
 import {PreservationAttk} from "./LevelAttacks/16Preservation.sol";
 import {RecoveryAttk} from "./LevelAttacks/17Recovery.sol";
+import {MagicNumberAttk} from "./LevelAttacks/18MagicNumber.sol";
 
 contract RunLvlAttack is Script {
     uint256 constant c_someEther = 0.00001 ether;
@@ -54,6 +55,8 @@ contract RunLvlAttack is Script {
         0x7ae0655F0Ee1e7752D7C62493CEa1E69A810e2ed;
     address constant LVL_17_FACTORY =
         0xAF98ab8F2e2B24F42C661ed023237f5B7acAB048;
+    address constant LVL_18_FACTORY =
+        0x2132C7bc11De7A90B87375f282d36100a29f97a9;
 
     // todo could be easier to use but will imply storing all lvls on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
@@ -228,7 +231,7 @@ contract RunLvlAttack is Script {
         } else if (lvlNumber_ == 14) {
             console.log("14 Gate Kepper Two level attack");
             lvlFactory = LVL_14_FACTORY;
-            // lvlAttack = new GatekeeperTwoAttk();  no create the contrct cuz the attack is in the constructor
+            // lvlAttack = new GatekeeperTwoAttk();  no create the contract cuz the attack is in the constructor
             needBroadcast = true;
         } else if (lvlNumber_ == 15) {
             console.log("15 Naught Coin level attack");
@@ -245,6 +248,10 @@ contract RunLvlAttack is Script {
             lvlFactory = LVL_17_FACTORY;
             lvlAttack = new RecoveryAttk();
             createValue = c_etherValue;
+        } else if (lvlNumber_ == 18) {
+            console.log("18 Magic Number level attack");
+            lvlFactory = LVL_18_FACTORY;
+            lvlAttack = new MagicNumberAttk();
         } else {
             revert("Not implemented");
         }
