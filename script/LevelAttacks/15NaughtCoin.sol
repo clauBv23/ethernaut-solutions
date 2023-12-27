@@ -7,7 +7,7 @@ import {console} from "forge-std/Script.sol";
 
 contract NaughtCoinAttk is Broadcasted {
     function attack(address payable naughtCoinCtr_) public payable override {
-        // ! there most be an aprrove before calling this function
+        // ! there most be an approve before calling this function
         uint256 accBalance = INaughtCoin(naughtCoinCtr_).balanceOf(msg.sender);
         console.log("accBalance: %s", accBalance);
         // console.log(accBalance);
