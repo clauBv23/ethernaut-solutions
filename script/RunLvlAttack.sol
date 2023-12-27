@@ -24,6 +24,7 @@ import {NaughtCoinAttk, INaughtCoin} from "./LevelAttacks/15NaughtCoin.sol";
 import {PreservationAttk} from "./LevelAttacks/16Preservation.sol";
 import {RecoveryAttk} from "./LevelAttacks/17Recovery.sol";
 import {MagicNumberAttk} from "./LevelAttacks/18MagicNumber.sol";
+import {AlienCodexAttk} from "./LevelAttacks/19AlienCodex.sol";
 
 contract RunLvlAttack is Script {
     uint256 constant c_someEther = 0.00001 ether;
@@ -57,6 +58,9 @@ contract RunLvlAttack is Script {
         0xAF98ab8F2e2B24F42C661ed023237f5B7acAB048;
     address constant LVL_18_FACTORY =
         0x2132C7bc11De7A90B87375f282d36100a29f97a9;
+
+    address constant LVL_19_FACTORY =
+        0x0BC04aa6aaC163A6B3667636D798FA053D43BD11;
 
     // todo could be easier to use but will imply storing all lvls on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
@@ -252,6 +256,10 @@ contract RunLvlAttack is Script {
             console.log("18 Magic Number level attack");
             lvlFactory = LVL_18_FACTORY;
             lvlAttack = new MagicNumberAttk();
+        } else if (lvlNumber_ == 19) {
+            console.log("18 Alien Codex level attack");
+            lvlFactory = LVL_19_FACTORY;
+            lvlAttack = new AlienCodexAttk();
         } else {
             revert("Not implemented");
         }
