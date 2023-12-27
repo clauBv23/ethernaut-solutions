@@ -22,6 +22,7 @@ import {GatekeeperOneAttk} from "./LevelAttacks/13GatekeeperOne.sol";
 import {GatekeeperTwoAttk} from "./LevelAttacks/14GatekeeperTwo.sol";
 import {NaughtCoinAttk, INaughtCoin} from "./LevelAttacks/15NaughtCoin.sol";
 import {PreservationAttk} from "./LevelAttacks/16Preservation.sol";
+import {RecoveryAttk} from "./LevelAttacks/17Recovery.sol";
 
 contract RunLvlAttack is Script {
     uint256 constant c_someEther = 0.00001 ether;
@@ -51,6 +52,8 @@ contract RunLvlAttack is Script {
         0x80934BE6B8B872B364b470Ca30EaAd8AEAC4f63F;
     address constant LVL_16_FACTORY =
         0x7ae0655F0Ee1e7752D7C62493CEa1E69A810e2ed;
+    address constant LVL_17_FACTORY =
+        0xAF98ab8F2e2B24F42C661ed023237f5B7acAB048;
 
     // todo could be easier to use but will imply storing all lvls on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
@@ -237,6 +240,11 @@ contract RunLvlAttack is Script {
             lvlFactory = LVL_16_FACTORY;
             lvlAttack = new PreservationAttk();
             needBroadcast = true;
+        } else if (lvlNumber_ == 17) {
+            console.log("17 Recovery level attack");
+            lvlFactory = LVL_17_FACTORY;
+            lvlAttack = new RecoveryAttk();
+            createValue = c_etherValue;
         } else {
             revert("Not implemented");
         }
