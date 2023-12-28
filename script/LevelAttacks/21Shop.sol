@@ -33,6 +33,7 @@ contract ShopAttk is Broadcasted {
 }
 
 interface IShop {
+    //! to hack this level have to have a function that returns price depending on if the object is sell or not
     function isSold() external view returns (bool);
 
     function buy() external;
