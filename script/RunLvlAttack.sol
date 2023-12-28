@@ -27,6 +27,7 @@ import {RecoveryAttk} from "./LevelAttacks/17Recovery.sol";
 import {MagicNumberAttk} from "./LevelAttacks/18MagicNumber.sol";
 import {AlienCodexAttk} from "./LevelAttacks/19AlienCodex.sol";
 import {DenialAttk} from "./LevelAttacks/20Denial.sol";
+import {ShopAttk} from "./LevelAttacks/21Shop.sol";
 
 contract RunLvlAttack is Script {
     uint256 constant s_someEther = 0.00001 ether;
@@ -65,6 +66,8 @@ contract RunLvlAttack is Script {
         0x0BC04aa6aaC163A6B3667636D798FA053D43BD11;
     address constant LVL_20_FACTORY =
         0x2427aF06f748A6adb651aCaB0cA8FbC7EaF802e6;
+    address constant LVL_21_FACTORY =
+        0x691eeA9286124c043B82997201E805646b76351a;
 
     // todo could be easier to use but will imply storing all levels on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
@@ -273,6 +276,10 @@ contract RunLvlAttack is Script {
             lvlFactory = LVL_20_FACTORY;
             lvlAttack = new DenialAttk();
             createValue = s_initialDeposit;
+        } else if (lvlNumber_ == 21) {
+            console.log("21 Shop level attack");
+            lvlFactory = LVL_21_FACTORY;
+            lvlAttack = new ShopAttk();
         } else {
             revert("Not implemented");
         }
