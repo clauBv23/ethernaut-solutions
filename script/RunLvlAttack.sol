@@ -6,6 +6,7 @@ import {Vm} from "forge-std/Vm.sol";
 import {Script, console} from "forge-std/Script.sol";
 
 import {Broadcasted} from "./LevelAttacks/Broadcasted.sol";
+import {HelloAttk} from "./LevelAttacks/00Hello.sol";
 import {FallbackAttk} from "./LevelAttacks/01Fallback.sol";
 import {FalloutAttk} from "./LevelAttacks/02Fallout.sol";
 import {CoinFlipAttk} from "./LevelAttacks/03CoinFlip.sol";
@@ -25,12 +26,14 @@ import {PreservationAttk} from "./LevelAttacks/16Preservation.sol";
 import {RecoveryAttk} from "./LevelAttacks/17Recovery.sol";
 import {MagicNumberAttk} from "./LevelAttacks/18MagicNumber.sol";
 import {AlienCodexAttk} from "./LevelAttacks/19AlienCodex.sol";
+import {DenialAttk} from "./LevelAttacks/20Denial.sol";
 
 contract RunLvlAttack is Script {
-    uint256 constant c_someEther = 0.00001 ether;
-    uint256 constant c_etherValue = 0.001 ether;
+    uint256 constant s_someEther = 0.00001 ether;
+    uint256 constant s_initialDeposit = 0.001 ether;
     // address in Sepolia
     address constant ETHERNAUT_CTR = 0xa3e7317E591D5A0F1c605be1b3aC4D2ae56104d6;
+    address constant LVL_0_FACTORY = 0x7E0f53981657345B31C59aC44e9c21631Ce710c7;
     address constant LVL_1_FACTORY = 0x3c34A342b2aF5e885FcaA3800dB5B205fEfa3ffB;
     address constant LVL_2_FACTORY = 0x676e57FdBbd8e5fE1A7A3f4Bb1296dAC880aa639;
     address constant LVL_3_FACTORY = 0xA62fE5344FE62AdC1F356447B669E9E6D10abaaF;
@@ -58,11 +61,12 @@ contract RunLvlAttack is Script {
         0xAF98ab8F2e2B24F42C661ed023237f5B7acAB048;
     address constant LVL_18_FACTORY =
         0x2132C7bc11De7A90B87375f282d36100a29f97a9;
-
     address constant LVL_19_FACTORY =
         0x0BC04aa6aaC163A6B3667636D798FA053D43BD11;
+    address constant LVL_20_FACTORY =
+        0x2427aF06f748A6adb651aCaB0cA8FbC7EaF802e6;
 
-    // todo could be easier to use but will imply storing all lvls on storage
+    // todo could be easier to use but will imply storing all levels on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
 
     function run(uint256 lvlNumber_) public {
@@ -88,7 +92,7 @@ contract RunLvlAttack is Script {
             vm.stopBroadcast();
         }
 
-        // check lvl suceeded
+        // check lvl succeeded
         vm.startBroadcast();
         submitLevel(_lvlFactory, _lvlInstance);
         vm.stopBroadcast();
@@ -145,7 +149,7 @@ contract RunLvlAttack is Script {
             }
         } else {
             if (lvlNumber_ == 15) {
-                //need extra configuration for appoval
+                //need extra configuration for approval
                 INaughtCoin(lvlInstance_).approve(
                     address(attackCtr_),
                     INaughtCoin(lvlInstance_).balanceOf(msg.sender)
@@ -167,11 +171,15 @@ contract RunLvlAttack is Script {
             uint256 createValue
         )
     {
-        if (lvlNumber_ == 1) {
+        if (lvlNumber_ == 0) {
+            console.log("00 Hello level attack");
+            lvlFactory = LVL_0_FACTORY;
+            lvlAttack = new HelloAttk();
+        } else if (lvlNumber_ == 1) {
             console.log("01 Fallback level attack");
             lvlFactory = LVL_1_FACTORY;
             lvlAttack = new FallbackAttk();
-            callValue = 2 * c_someEther;
+            callValue = 2 * s_someEther;
         } else if (lvlNumber_ == 2) {
             console.log("02 Fallout level attack");
             lvlFactory = LVL_2_FACTORY;
@@ -198,7 +206,7 @@ contract RunLvlAttack is Script {
         } else if (lvlNumber_ == 7) {
             console.log("07 Force level attack");
             lvlFactory = LVL_7_FACTORY;
-            lvlAttack = new ForceAttk{value: c_someEther}();
+            lvlAttack = new ForceAttk{value: s_someEther}();
             needBroadcast = true;
         } else if (lvlNumber_ == 8) {
             console.log("08 Vault level attack");
@@ -208,16 +216,16 @@ contract RunLvlAttack is Script {
             console.log("09 King level attack");
             lvlFactory = LVL_9_FACTORY;
             lvlAttack = new KingAttk();
-            callValue = c_etherValue;
+            callValue = s_initialDeposit;
             needBroadcast = true;
-            createValue = c_etherValue;
+            createValue = s_initialDeposit;
         } else if (lvlNumber_ == 10) {
             console.log("10 Reentrancy level attack");
             lvlFactory = LVL_10_FACTORY;
             lvlAttack = new ReentrancyAttk();
-            callValue = c_etherValue;
+            callValue = s_initialDeposit;
             needBroadcast = true;
-            createValue = c_etherValue;
+            createValue = s_initialDeposit;
         } else if (lvlNumber_ == 11) {
             console.log("11 Elevator level attack");
             lvlFactory = LVL_11_FACTORY;
@@ -228,12 +236,12 @@ contract RunLvlAttack is Script {
             lvlFactory = LVL_12_FACTORY;
             lvlAttack = new PrivacyAttk();
         } else if (lvlNumber_ == 13) {
-            console.log("13 Gate Kepper One level attack");
+            console.log("13 Gate Keeper One level attack");
             lvlFactory = LVL_13_FACTORY;
             lvlAttack = new GatekeeperOneAttk();
             needBroadcast = true;
         } else if (lvlNumber_ == 14) {
-            console.log("14 Gate Kepper Two level attack");
+            console.log("14 Gate Keeper Two level attack");
             lvlFactory = LVL_14_FACTORY;
             // lvlAttack = new GatekeeperTwoAttk();  no create the contract cuz the attack is in the constructor
             needBroadcast = true;
@@ -251,15 +259,20 @@ contract RunLvlAttack is Script {
             console.log("17 Recovery level attack");
             lvlFactory = LVL_17_FACTORY;
             lvlAttack = new RecoveryAttk();
-            createValue = c_etherValue;
+            createValue = s_initialDeposit;
         } else if (lvlNumber_ == 18) {
             console.log("18 Magic Number level attack");
             lvlFactory = LVL_18_FACTORY;
             lvlAttack = new MagicNumberAttk();
         } else if (lvlNumber_ == 19) {
-            console.log("18 Alien Codex level attack");
+            console.log("19 Alien Codex level attack");
             lvlFactory = LVL_19_FACTORY;
             lvlAttack = new AlienCodexAttk();
+        } else if (lvlNumber_ == 20) {
+            console.log("20 Denial level attack");
+            lvlFactory = LVL_20_FACTORY;
+            lvlAttack = new DenialAttk();
+            createValue = s_initialDeposit;
         } else {
             revert("Not implemented");
         }
