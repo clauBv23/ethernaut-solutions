@@ -280,6 +280,7 @@ contract RunLvlAttack is Script {
             console.log("21 Shop level attack");
             lvlFactory = LVL_21_FACTORY;
             lvlAttack = new ShopAttk();
+            needBroadcast = true;
         } else {
             revert("Not implemented");
         }
