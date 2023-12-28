@@ -15,6 +15,7 @@ contract DenialAttk is Broadcasted {
 }
 
 interface IDenial {
+    //! the solution is a Denial of Service attack by setting as partner a contract that can't receive
     function setWithdrawPartner(address _partner) external;
 
     function withdraw() external;
