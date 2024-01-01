@@ -4,8 +4,6 @@ pragma solidity ^0.8.19;
 
 import {Broadcasted} from "./Broadcasted.sol";
 
-import {console} from "forge-std/Script.sol";
-
 contract ReentrancyAttack is Broadcasted {
     address s_contractAddr;
     uint256 s_amount;
@@ -19,11 +17,11 @@ contract ReentrancyAttack is Broadcasted {
         address payable reentrancyCtr_
     ) external payable override {
         // no broadcast to have the current contract as the donator
-        _setContractAndAmmount(reentrancyCtr_, msg.value);
+        _setContractAndAmount(reentrancyCtr_, msg.value);
         attack(reentrancyCtr_);
     }
 
-    function _setContractAndAmmount(
+    function _setContractAndAmount(
         address payable reentrancyCtr_,
         uint256 amount_
     ) internal {
