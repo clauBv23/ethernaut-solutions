@@ -10,7 +10,7 @@ abstract contract Broadcasted is Script {
     function broadcastedAttack(
         address payable levelInstanceCtr_
     ) external payable virtual {
-        // start broadcst to sign the transactions as the msg.sender(our address)
+        // start broadcast to sign the transactions as the msg.sender(our address)
         vm.startBroadcast();
         attack(levelInstanceCtr_);
         vm.stopBroadcast();
