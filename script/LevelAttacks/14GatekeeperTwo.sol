@@ -21,6 +21,6 @@ contract GatekeeperTwoAttack is Broadcasted {
 interface IGateKeeperTwo {
     //! gate 1 pass making the calls from a contract
     //! gate 2 calling from the contract constructor (in the ctor the extcodesize is 0)
-    //! gate 3  complish the logic opetations requirements
+    //! gate 3 accomplish the logic operations requirements
     function enter(bytes8 _gateKey) external returns (bool);
 }
