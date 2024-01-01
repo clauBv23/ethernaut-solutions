@@ -4,8 +4,6 @@ pragma solidity ^0.8.19;
 
 import {Broadcasted} from "./Broadcasted.sol";
 
-import {console} from "forge-std/Script.sol";
-
 contract RecoveryAttack is Broadcasted {
     function attack(address payable recoveryCtr_) public payable override {
         // get the lost address
