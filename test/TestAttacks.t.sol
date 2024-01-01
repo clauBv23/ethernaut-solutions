@@ -20,7 +20,7 @@ contract TestAttacks is Test {
     }
 
     function testAttackLevels() public {
-        for (uint160 i = 15; i <= 15; ++i) {
+        for (uint160 i = 0; i <= s_totalAttackedLevels; ++i) {
             if (i == 3) {
                 continue;
             }
