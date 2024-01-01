@@ -14,11 +14,11 @@ contract ForceAttack is Broadcasted {
     function broadcastedAttack(
         address payable levelInstanceCtr_
     ) external payable override {
-        // intentionally not broadcasted to avoid pending operation after selfdestruct
+        // intentionally not broadcasted to avoid pending operation after self-destruct
         attack(levelInstanceCtr_);
     }
 
     receive() external payable {}
 }
 
-// ! you can send ether to any adddress by calling selfdestruct in a contract with balance
+// ! you can send ether to any address by calling self-destruct in a contract with balance
