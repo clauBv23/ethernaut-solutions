@@ -28,7 +28,8 @@ import {MagicNumberAttk} from "./LevelAttacks/18MagicNumber.sol";
 import {AlienCodexAttk} from "./LevelAttacks/19AlienCodex.sol";
 import {DenialAttk} from "./LevelAttacks/20Denial.sol";
 import {ShopAttk} from "./LevelAttacks/21Shop.sol";
-import {DexAttk, IDex} from "./LevelAttacks/22Dex.sol";
+import {DexAttk} from "./LevelAttacks/22Dex.sol";
+import {DexTwoAttk} from "./LevelAttacks/23DexTwo.sol";
 
 contract RunLvlAttack is Script {
     uint256 constant s_someEther = 0.00001 ether;
@@ -71,6 +72,8 @@ contract RunLvlAttack is Script {
         0x691eeA9286124c043B82997201E805646b76351a;
     address constant LVL_22_FACTORY =
         0xB468f8e42AC0fAe675B56bc6FDa9C0563B61A52F;
+    address constant LVL_23_FACTORY =
+        0xf59112032D54862E199626F55cFad4F8a3b0Fce9;
 
     // todo could be easier to use but will imply storing all levels on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
@@ -161,10 +164,6 @@ contract RunLvlAttack is Script {
                     INaughtCoin(lvlInstance_).balanceOf(msg.sender)
                 );
             }
-            // else if (lvlNumber_ == 22) {
-            //     //need extra configuration for approval
-            //     IDex(lvlInstance_).approve(address(attackCtr_), 1000);
-            // }
             attackCtr_.broadcastedAttack{value: value_}(payable(lvlInstance_));
         }
     }
@@ -292,7 +291,10 @@ contract RunLvlAttack is Script {
             console.log("22 Dex level attack");
             lvlFactory = LVL_22_FACTORY;
             lvlAttack = new DexAttk();
-            // needBroadcast = true;
+        } else if (lvlNumber_ == 23) {
+            console.log("23 Dex Two level attack");
+            lvlFactory = LVL_23_FACTORY;
+            lvlAttack = new DexTwoAttk();
         } else {
             revert("Not implemented");
         }
