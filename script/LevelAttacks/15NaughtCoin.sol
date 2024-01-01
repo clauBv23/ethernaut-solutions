@@ -3,19 +3,16 @@
 pragma solidity ^0.8.19;
 
 import {Broadcasted} from "./Broadcasted.sol";
-import {console} from "forge-std/Script.sol";
 
 contract NaughtCoinAttack is Broadcasted {
     function attack(address payable naughtCoinCtr_) public payable override {
         // ! there most be an approve before calling this function
-        uint256 accBalance = INaughtCoin(naughtCoinCtr_).balanceOf(msg.sender);
-        console.log("accBalance: %s", accBalance);
-        // console.log(accBalance);
+        uint256 _accBalance = INaughtCoin(naughtCoinCtr_).balanceOf(msg.sender);
 
         INaughtCoin(naughtCoinCtr_).transferFrom(
             msg.sender,
             address(this),
-            accBalance
+            _accBalance
         );
     }
 
