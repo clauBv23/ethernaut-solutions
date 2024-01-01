@@ -5,7 +5,7 @@ pragma solidity ^0.8.19;
 import {Vm} from "forge-std/Vm.sol";
 import {Script, console} from "forge-std/Script.sol";
 
-import {Broadcasted} from "./LevelAttacks/Broadcasted.sol";
+import {Broadcasted} from "./LevelAttacks/Helper/Broadcasted.sol";
 import {HelloAttack} from "./LevelAttacks/00Hello.sol";
 import {FallbackAttack} from "./LevelAttacks/01Fallback.sol";
 import {FalloutAttack} from "./LevelAttacks/02Fallout.sol";
