@@ -30,6 +30,7 @@ import {DenialAttack} from "./LevelAttacks/20Denial.sol";
 import {ShopAttack} from "./LevelAttacks/21Shop.sol";
 import {DexAttack} from "./LevelAttacks/22Dex.sol";
 import {DexTwoAttack} from "./LevelAttacks/23DexTwo.sol";
+import {PuzzleWalletAttack} from "./LevelAttacks/24PuzzleWallet.sol";
 
 contract RunLvlAttack is Script {
     uint256 constant s_someEther = 0.00001 ether;
@@ -74,6 +75,8 @@ contract RunLvlAttack is Script {
         0xB468f8e42AC0fAe675B56bc6FDa9C0563B61A52F;
     address constant LVL_23_FACTORY =
         0xf59112032D54862E199626F55cFad4F8a3b0Fce9;
+    address constant LVL_24_FACTORY =
+        0x725595BA16E76ED1F6cC1e1b65A88365cC494824;
 
     // todo could be easier to use but will imply storing all levels on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
@@ -295,6 +298,13 @@ contract RunLvlAttack is Script {
             console.log("23 Dex Two level attack");
             lvlFactory = LVL_23_FACTORY;
             lvlAttack = new DexTwoAttack();
+        } else if (lvlNumber_ == 24) {
+            console.log("24 Puzzle Wallet level attack");
+            lvlFactory = LVL_24_FACTORY;
+            lvlAttack = new PuzzleWalletAttack();
+            createValue = s_initialDeposit;
+            callValue = s_initialDeposit;
+            needBroadcast = true;
         } else {
             revert("Not implemented");
         }
