@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.19;
 
-import {Broadcasted} from "./Broadcasted.sol";
+import {Broadcasted} from "./Helper/Broadcasted.sol";
 
 contract DexTwoAttack is Broadcasted {
     function attack(address payable dexTwoCtr_) public payable override {

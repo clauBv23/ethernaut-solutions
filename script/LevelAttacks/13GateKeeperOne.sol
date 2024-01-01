@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.19;
 
-import {Broadcasted} from "./Broadcasted.sol";
+import {Broadcasted} from "./Helper/Broadcasted.sol";
 
 contract GatekeeperOneAttack is Broadcasted {
     function attack(address payable gateKeeperOneCtr_) public payable override {

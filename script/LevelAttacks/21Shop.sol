@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.19;
 
-import {Broadcasted} from "./Broadcasted.sol";
+import {Broadcasted} from "./Helper/Broadcasted.sol";
 
 contract ShopAttack is Broadcasted {
     address private s_shop;
