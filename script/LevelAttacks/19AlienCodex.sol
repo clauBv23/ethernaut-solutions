@@ -2,8 +2,6 @@
 
 pragma solidity ^0.8.19;
 
-import {console} from "forge-std/Script.sol";
-
 import {Broadcasted} from "./Broadcasted.sol";
 
 contract AlienCodexAttack is Broadcasted {
