@@ -10,7 +10,7 @@ contract PreservationAttack is Broadcasted {
     function attack(address payable preservationCtr_) public payable override {
         // call to set the corrupted library as the timezone 1 library
         _callSetFirstTime(preservationCtr_);
-        // call to invoque the setTime function of the corrupted library and change the contract owner
+        // call to invoke the setTime function of the corrupted library and change the contract owner
         _callSetFirstTime(preservationCtr_);
     }
 
