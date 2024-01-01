@@ -6,7 +6,7 @@ import {console} from "forge-std/Script.sol";
 
 import {Broadcasted} from "./Broadcasted.sol";
 
-contract KingAttk is Broadcasted {
+contract KingAttack is Broadcasted {
     function attack(address payable kingCtr_) public payable override {
         kingCtr_.call{value: msg.value}("");
     }

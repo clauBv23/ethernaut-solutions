@@ -4,7 +4,7 @@ pragma solidity ^0.8.19;
 
 import {Broadcasted} from "./Broadcasted.sol";
 
-contract DexTwoAttk is Broadcasted {
+contract DexTwoAttack is Broadcasted {
     function attack(address payable dexTwoCtr_) public payable override {
         FakeToken ft = new FakeToken();
         IDexTwo(dexTwoCtr_).swap(address(ft), IDexTwo(dexTwoCtr_).token1(), 1);

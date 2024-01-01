@@ -6,7 +6,7 @@ import {Broadcasted} from "./Broadcasted.sol";
 
 import {console} from "forge-std/Script.sol";
 
-contract ReentrancyAttk is Broadcasted {
+contract ReentrancyAttack is Broadcasted {
     address s_contractAddr;
     uint256 s_amount;
 

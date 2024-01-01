@@ -6,30 +6,30 @@ import {Vm} from "forge-std/Vm.sol";
 import {Script, console} from "forge-std/Script.sol";
 
 import {Broadcasted} from "./LevelAttacks/Broadcasted.sol";
-import {HelloAttk} from "./LevelAttacks/00Hello.sol";
-import {FallbackAttk} from "./LevelAttacks/01Fallback.sol";
-import {FalloutAttk} from "./LevelAttacks/02Fallout.sol";
-import {CoinFlipAttk} from "./LevelAttacks/03CoinFlip.sol";
-import {TelephoneAttk} from "./LevelAttacks/04Telephone.sol";
+import {HelloAttack} from "./LevelAttacks/00Hello.sol";
+import {FallbackAttack} from "./LevelAttacks/01Fallback.sol";
+import {FalloutAttack} from "./LevelAttacks/02Fallout.sol";
+import {CoinFlipAttack} from "./LevelAttacks/03CoinFlip.sol";
+import {TelephoneAttack} from "./LevelAttacks/04Telephone.sol";
 import {TokenAttack} from "./LevelAttacks/05Token.sol";
-import {DelegationAttk} from "./LevelAttacks/06Delegation.sol";
-import {ForceAttk} from "./LevelAttacks/07Force.sol";
-import {VaultAttk} from "./LevelAttacks/08Vault.sol";
-import {KingAttk} from "./LevelAttacks/09King.sol";
-import {ReentrancyAttk} from "./LevelAttacks/10Reentrancy.sol";
-import {ElevatorAttk} from "./LevelAttacks/11Elevator.sol";
-import {PrivacyAttk} from "./LevelAttacks/12Privacy.sol";
-import {GatekeeperOneAttk} from "./LevelAttacks/13GatekeeperOne.sol";
-import {GatekeeperTwoAttk} from "./LevelAttacks/14GatekeeperTwo.sol";
-import {NaughtCoinAttk, INaughtCoin} from "./LevelAttacks/15NaughtCoin.sol";
-import {PreservationAttk} from "./LevelAttacks/16Preservation.sol";
-import {RecoveryAttk} from "./LevelAttacks/17Recovery.sol";
-import {MagicNumberAttk} from "./LevelAttacks/18MagicNumber.sol";
-import {AlienCodexAttk} from "./LevelAttacks/19AlienCodex.sol";
-import {DenialAttk} from "./LevelAttacks/20Denial.sol";
-import {ShopAttk} from "./LevelAttacks/21Shop.sol";
-import {DexAttk} from "./LevelAttacks/22Dex.sol";
-import {DexTwoAttk} from "./LevelAttacks/23DexTwo.sol";
+import {DelegationAttack} from "./LevelAttacks/06Delegation.sol";
+import {ForceAttack} from "./LevelAttacks/07Force.sol";
+import {VaultAttack} from "./LevelAttacks/08Vault.sol";
+import {KingAttack} from "./LevelAttacks/09King.sol";
+import {ReentrancyAttack} from "./LevelAttacks/10Reentrancy.sol";
+import {ElevatorAttack} from "./LevelAttacks/11Elevator.sol";
+import {PrivacyAttack} from "./LevelAttacks/12Privacy.sol";
+import {GatekeeperOneAttack} from "./LevelAttacks/13GatekeeperOne.sol";
+import {GatekeeperTwoAttack} from "./LevelAttacks/14GatekeeperTwo.sol";
+import {NaughtCoinAttack, INaughtCoin} from "./LevelAttacks/15NaughtCoin.sol";
+import {PreservationAttack} from "./LevelAttacks/16Preservation.sol";
+import {RecoveryAttack} from "./LevelAttacks/17Recovery.sol";
+import {MagicNumberAttack} from "./LevelAttacks/18MagicNumber.sol";
+import {AlienCodexAttack} from "./LevelAttacks/19AlienCodex.sol";
+import {DenialAttack} from "./LevelAttacks/20Denial.sol";
+import {ShopAttack} from "./LevelAttacks/21Shop.sol";
+import {DexAttack} from "./LevelAttacks/22Dex.sol";
+import {DexTwoAttack} from "./LevelAttacks/23DexTwo.sol";
 
 contract RunLvlAttack is Script {
     uint256 constant s_someEther = 0.00001 ether;
@@ -154,7 +154,7 @@ contract RunLvlAttack is Script {
         if (attackCtr_ == Broadcasted(address(0))) {
             // there is not deployed attack contract the attack is in the constructor
             if (lvlNumber_ == 14) {
-                attackCtr_ = new GatekeeperTwoAttk(payable(lvlInstance_));
+                attackCtr_ = new GatekeeperTwoAttack(payable(lvlInstance_));
             }
         } else {
             if (lvlNumber_ == 15) {
@@ -183,26 +183,26 @@ contract RunLvlAttack is Script {
         if (lvlNumber_ == 0) {
             console.log("00 Hello level attack");
             lvlFactory = LVL_0_FACTORY;
-            lvlAttack = new HelloAttk();
+            lvlAttack = new HelloAttack();
         } else if (lvlNumber_ == 1) {
             console.log("01 Fallback level attack");
             lvlFactory = LVL_1_FACTORY;
-            lvlAttack = new FallbackAttk();
+            lvlAttack = new FallbackAttack();
             callValue = 2 * s_someEther;
         } else if (lvlNumber_ == 2) {
             console.log("02 Fallout level attack");
             lvlFactory = LVL_2_FACTORY;
-            lvlAttack = new FalloutAttk();
+            lvlAttack = new FalloutAttack();
         }
         // else if (lvlNumber_ == 3) {
         // todo lvl3 need calls on different blocks look a workaround
         //     console.log("03 Coin Flip level attack");
-        //     return (LVL_3_FACTORY, new CoinFlipAttk(), 0);
+        //     return (LVL_3_FACTORY, new CoinFlipAttack(), 0);
         // }
         else if (lvlNumber_ == 4) {
             console.log("04 Telephone level attack");
             lvlFactory = LVL_4_FACTORY;
-            lvlAttack = new TelephoneAttk();
+            lvlAttack = new TelephoneAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 5) {
             console.log("05 Token level attack");
@@ -211,90 +211,90 @@ contract RunLvlAttack is Script {
         } else if (lvlNumber_ == 6) {
             console.log("06 Delegation level attack");
             lvlFactory = LVL_6_FACTORY;
-            lvlAttack = new DelegationAttk();
+            lvlAttack = new DelegationAttack();
         } else if (lvlNumber_ == 7) {
             console.log("07 Force level attack");
             lvlFactory = LVL_7_FACTORY;
-            lvlAttack = new ForceAttk{value: s_someEther}();
+            lvlAttack = new ForceAttack{value: s_someEther}();
             needBroadcast = true;
         } else if (lvlNumber_ == 8) {
             console.log("08 Vault level attack");
             lvlFactory = LVL_8_FACTORY;
-            lvlAttack = new VaultAttk();
+            lvlAttack = new VaultAttack();
         } else if (lvlNumber_ == 9) {
             console.log("09 King level attack");
             lvlFactory = LVL_9_FACTORY;
-            lvlAttack = new KingAttk();
+            lvlAttack = new KingAttack();
             callValue = s_initialDeposit;
             needBroadcast = true;
             createValue = s_initialDeposit;
         } else if (lvlNumber_ == 10) {
             console.log("10 Reentrancy level attack");
             lvlFactory = LVL_10_FACTORY;
-            lvlAttack = new ReentrancyAttk();
+            lvlAttack = new ReentrancyAttack();
             callValue = s_initialDeposit;
             needBroadcast = true;
             createValue = s_initialDeposit;
         } else if (lvlNumber_ == 11) {
             console.log("11 Elevator level attack");
             lvlFactory = LVL_11_FACTORY;
-            lvlAttack = new ElevatorAttk();
+            lvlAttack = new ElevatorAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 12) {
             console.log("12 Privacy level attack");
             lvlFactory = LVL_12_FACTORY;
-            lvlAttack = new PrivacyAttk();
+            lvlAttack = new PrivacyAttack();
         } else if (lvlNumber_ == 13) {
             console.log("13 Gate Keeper One level attack");
             lvlFactory = LVL_13_FACTORY;
-            lvlAttack = new GatekeeperOneAttk();
+            lvlAttack = new GatekeeperOneAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 14) {
             console.log("14 Gate Keeper Two level attack");
             lvlFactory = LVL_14_FACTORY;
-            // lvlAttack = new GatekeeperTwoAttk();  no create the contract cuz the attack is in the constructor
+            // lvlAttack = new GatekeeperTwoAttack();  no create the contract cuz the attack is in the constructor
             needBroadcast = true;
         } else if (lvlNumber_ == 15) {
             console.log("15 Naught Coin level attack");
             lvlFactory = LVL_15_FACTORY;
-            lvlAttack = new NaughtCoinAttk();
+            lvlAttack = new NaughtCoinAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 16) {
             console.log("16 Preservation level attack");
             lvlFactory = LVL_16_FACTORY;
-            lvlAttack = new PreservationAttk();
+            lvlAttack = new PreservationAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 17) {
             console.log("17 Recovery level attack");
             lvlFactory = LVL_17_FACTORY;
-            lvlAttack = new RecoveryAttk();
+            lvlAttack = new RecoveryAttack();
             createValue = s_initialDeposit;
         } else if (lvlNumber_ == 18) {
             console.log("18 Magic Number level attack");
             lvlFactory = LVL_18_FACTORY;
-            lvlAttack = new MagicNumberAttk();
+            lvlAttack = new MagicNumberAttack();
         } else if (lvlNumber_ == 19) {
             console.log("19 Alien Codex level attack");
             lvlFactory = LVL_19_FACTORY;
-            lvlAttack = new AlienCodexAttk();
+            lvlAttack = new AlienCodexAttack();
         } else if (lvlNumber_ == 20) {
             console.log("20 Denial level attack");
             lvlFactory = LVL_20_FACTORY;
-            lvlAttack = new DenialAttk();
+            lvlAttack = new DenialAttack();
             createValue = s_initialDeposit;
         } else if (lvlNumber_ == 21) {
             console.log("21 Shop level attack");
             lvlFactory = LVL_21_FACTORY;
-            lvlAttack = new ShopAttk();
+            lvlAttack = new ShopAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 22) {
             console.log("22 Dex level attack");
             lvlFactory = LVL_22_FACTORY;
-            lvlAttack = new DexAttk();
+            lvlAttack = new DexAttack();
         } else if (lvlNumber_ == 23) {
             console.log("23 Dex Two level attack");
             lvlFactory = LVL_23_FACTORY;
-            lvlAttack = new DexTwoAttk();
+            lvlAttack = new DexTwoAttack();
         } else {
             revert("Not implemented");
         }

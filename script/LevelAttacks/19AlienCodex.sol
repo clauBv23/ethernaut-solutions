@@ -6,7 +6,7 @@ import {console} from "forge-std/Script.sol";
 
 import {Broadcasted} from "./Broadcasted.sol";
 
-contract AlienCodexAttk is Broadcasted {
+contract AlienCodexAttack is Broadcasted {
     function attack(address payable alienCodexCtr_) public payable override {
         IAlienCodex(alienCodexCtr_).makeContact();
         // decrease the codex length (will underflow)

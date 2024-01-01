@@ -4,7 +4,7 @@ pragma solidity ^0.8.19;
 
 import {Broadcasted} from "./Broadcasted.sol";
 
-contract PreservationAttk is Broadcasted {
+contract PreservationAttack is Broadcasted {
     address private s_myLibrary;
 
     function attack(address payable preservationCtr_) public payable override {

@@ -4,9 +4,7 @@ pragma solidity ^0.8.19;
 
 import {Broadcasted} from "./Broadcasted.sol";
 
-import {console} from "forge-std/Script.sol";
-
-contract DexAttk is Broadcasted {
+contract DexAttack is Broadcasted {
     function attack(address payable dexCtr_) public payable override {
         // approve dex contract to spend 1000 tokens
         IDex(dexCtr_).approve(dexCtr_, 1000);

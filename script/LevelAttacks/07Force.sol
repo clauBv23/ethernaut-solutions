@@ -4,7 +4,7 @@ pragma solidity ^0.8.19;
 
 import {Broadcasted} from "./Broadcasted.sol";
 
-contract ForceAttk is Broadcasted {
+contract ForceAttack is Broadcasted {
     constructor() payable {}
 
     function attack(address payable forceCtr_) public payable override {

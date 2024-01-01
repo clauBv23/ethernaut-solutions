@@ -4,7 +4,7 @@ pragma solidity ^0.8.19;
 
 import {Broadcasted} from "./Broadcasted.sol";
 
-contract MagicNumberAttk is Broadcasted {
+contract MagicNumberAttack is Broadcasted {
     function attack(address payable magicNumberCtr_) public payable override {
         IMagicNumber(magicNumberCtr_).setSolver(address(new MySolver()));
     }

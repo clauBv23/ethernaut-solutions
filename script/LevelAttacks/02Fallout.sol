@@ -4,7 +4,7 @@ pragma solidity ^0.8.19;
 
 import {Broadcasted} from "./Broadcasted.sol";
 
-contract FalloutAttk is Broadcasted {
+contract FalloutAttack is Broadcasted {
     function attack(address payable falloutCtr_) public payable override {
         // call erroneous Fal1out function
         IFallout(falloutCtr_).Fal1out();

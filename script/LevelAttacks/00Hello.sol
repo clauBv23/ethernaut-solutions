@@ -4,7 +4,7 @@ pragma solidity ^0.8.19;
 
 import {Broadcasted} from "./Broadcasted.sol";
 
-contract HelloAttk is Broadcasted {
+contract HelloAttack is Broadcasted {
     function attack(address payable helloCtr_) public payable override {
         IHello(helloCtr_).authenticate("ethernaut0");
     }

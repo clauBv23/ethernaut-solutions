@@ -8,7 +8,7 @@ interface Building {
     function isLastFloor(uint) external returns (bool);
 }
 
-contract ElevatorAttk is Broadcasted, Building {
+contract ElevatorAttack is Broadcasted, Building {
     bool public c_firstTime = true;
 
     function isLastFloor(uint) external override returns (bool) {

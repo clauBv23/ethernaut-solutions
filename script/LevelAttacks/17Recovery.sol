@@ -6,7 +6,7 @@ import {Broadcasted} from "./Broadcasted.sol";
 
 import {console} from "forge-std/Script.sol";
 
-contract RecoveryAttk is Broadcasted {
+contract RecoveryAttack is Broadcasted {
     function attack(address payable recoveryCtr_) public payable override {
         // get the lost address
         address simpleTokenAddress = address(
