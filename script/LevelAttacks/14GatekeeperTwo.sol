@@ -4,7 +4,7 @@ pragma solidity ^0.8.19;
 
 import {Broadcasted} from "./Broadcasted.sol";
 
-contract GatekeeperTwoAttk is Broadcasted {
+contract GatekeeperTwoAttack is Broadcasted {
     constructor(address payable gateKeeperOneCtr_) {
         uint64 _value = uint64(
             bytes8(keccak256(abi.encodePacked(address(this))))
