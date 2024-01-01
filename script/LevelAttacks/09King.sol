@@ -2,8 +2,6 @@
 
 pragma solidity ^0.8.19;
 
-import {console} from "forge-std/Script.sol";
-
 import {Broadcasted} from "./Broadcasted.sol";
 
 contract KingAttack is Broadcasted {
@@ -14,11 +12,11 @@ contract KingAttack is Broadcasted {
     function broadcastedAttack(
         address payable kingCtr_
     ) external payable override {
-        // intentionally not briadcasting to have msg the contract
+        // intentionally not broadcasting to have msg the contract
         attack(kingCtr_);
     }
 }
 
 // ! denial of service
-// ! setting as winner the current contract that dones't have fallback/receive function
+// ! setting as winner the current contract that doesn't have fallback/receive function
 // ! will not allow the king contract to receive the prize and will block the game
