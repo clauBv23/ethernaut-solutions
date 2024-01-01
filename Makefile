@@ -4,7 +4,8 @@
 include .env
 
 run-attack: 
-	forge script script/RunLvlAttack.sol --sig "run(uint256)" $(lvl)  --rpc-url $(SEPOLIA_RPC_URL) --private-key $(PRIVATE_KEY) 
-	#  --broadcast
+	forge script script/RunLvlAttack.sol --sig "run(uint256)" $(lvl)  --rpc-url $(SEPOLIA_RPC_URL) --private-key $(PRIVATE_KEY) --broadcast
 test-attack: 
-	forge script script/RunLvlAttack.sol --sig "run(uint256)" $(lvl)  --rpc-url $(SEPOLIA_RPC_URL) --private-key $(PRIVATE_KEY)
+	forge script script/RunLvlAttack.sol --sig "run(uint256)" $(lvl)  --rpc-url $(SEPOLIA_RPC_URL) --private-key $(PRIVATE_KEY) -vvvvv
+tests:
+	forge test --fork-url $(SEPOLIA_RPC_URL) -vvv
