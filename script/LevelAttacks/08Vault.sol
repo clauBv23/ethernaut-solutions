@@ -11,7 +11,7 @@ contract VaultAttack is Broadcasted {
 }
 
 interface IVault {
-    // ! read the private password from storage (everthing is public in solidity)
+    // ! read the private password from storage (everything is public in solidity)
     // bytes32 private password;
     function unlock(bytes32 _password) external;
 }
