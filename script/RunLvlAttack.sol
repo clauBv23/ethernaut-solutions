@@ -341,6 +341,7 @@ contract RunLvlAttack is Script {
             console.log("27 Good Samaritan level attack");
             lvlFactory = LVL_27_FACTORY;
             lvlAttack = new GoodSamaritanAttack();
+            needBroadcast = true;
         } else if (lvlNumber_ == 28) {
             console.log("28 Gate Keeper Three level attack");
             lvlFactory = LVL_28_FACTORY;
