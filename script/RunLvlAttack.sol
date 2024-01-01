@@ -31,6 +31,11 @@ import {ShopAttack} from "./LevelAttacks/21Shop.sol";
 import {DexAttack} from "./LevelAttacks/22Dex.sol";
 import {DexTwoAttack} from "./LevelAttacks/23DexTwo.sol";
 import {PuzzleWalletAttack} from "./LevelAttacks/24PuzzleWallet.sol";
+import {MotorbikeAttack} from "./LevelAttacks/25Motorbike.sol";
+import {DoubleEntryPointAttack} from "./LevelAttacks/26DoubleEntryPoint.sol";
+import {GoodSamaritanAttack} from "./LevelAttacks/27GoodSamaritan.sol";
+import {GateKeeperThreeAttack} from "./LevelAttacks/28GateKeeperThree.sol";
+import {SwitchAttack} from "./LevelAttacks/29Switch.sol";
 
 contract RunLvlAttack is Script {
     uint256 constant s_someEther = 0.00001 ether;
@@ -77,6 +82,16 @@ contract RunLvlAttack is Script {
         0xf59112032D54862E199626F55cFad4F8a3b0Fce9;
     address constant LVL_24_FACTORY =
         0x725595BA16E76ED1F6cC1e1b65A88365cC494824;
+    address constant LVL_25_FACTORY =
+        0x3A78EE8462BD2e31133de2B8f1f9CBD973D6eDd6;
+    address constant LVL_26_FACTORY =
+        0x34bD06F195756635a10A7018568E033bC15F3FB5;
+    address constant LVL_27_FACTORY =
+        0x36E92B2751F260D6a4749d7CA58247E7f8198284;
+    address constant LVL_28_FACTORY =
+        0x653239b3b3E67BC0ec1Df7835DA2d38761FfD882;
+    address constant LVL_29_FACTORY =
+        0xb2aBa0e156C905a9FAEc24805a009d99193E3E53;
 
     // todo could be easier to use but will imply storing all levels on storage
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
@@ -88,7 +103,8 @@ contract RunLvlAttack is Script {
             Broadcasted _attackCtr,
             uint256 _callValue,
             bool _needBroadcast,
-            uint256 _createValue
+            uint256 _createValue,
+            bool _noValidate
         ) = getLevelFactoryAttackCtrAndValue(lvlNumber_);
 
         // create lvl instance
@@ -106,7 +122,7 @@ contract RunLvlAttack is Script {
 
         // check lvl succeeded
         vm.startBroadcast(tx.origin);
-        submitLevel(_lvlFactory, _lvlInstance);
+        submitLevel(_lvlFactory, _lvlInstance, _noValidate);
         vm.stopBroadcast();
     }
 
@@ -135,14 +151,20 @@ contract RunLvlAttack is Script {
         return payable(_lvlInstance);
     }
 
-    function submitLevel(address lvlFactory_, address lvlInstance_) public {
-        // validate lvl
-        require(
-            ILevelFactory(lvlFactory_).validateInstance(
-                payable(lvlInstance_),
-                tx.origin
-            )
-        );
+    function submitLevel(
+        address lvlFactory_,
+        address lvlInstance_,
+        bool noValidate_
+    ) public {
+        // validate lvl if no disabled
+        if (!noValidate_) {
+            require(
+                ILevelFactory(lvlFactory_).validateInstance(
+                    payable(lvlInstance_),
+                    tx.origin
+                )
+            );
+        }
         // submit lvl instance
         IEthernaut(ETHERNAUT_CTR).submitLevelInstance(payable(lvlInstance_));
     }
@@ -180,7 +202,8 @@ contract RunLvlAttack is Script {
             Broadcasted lvlAttack,
             uint256 callValue,
             bool needBroadcast,
-            uint256 createValue
+            uint256 createValue,
+            bool noValidate
         )
     {
         if (lvlNumber_ == 0) {
@@ -305,6 +328,27 @@ contract RunLvlAttack is Script {
             createValue = s_initialDeposit;
             callValue = s_initialDeposit;
             needBroadcast = true;
+        } else if (lvlNumber_ == 25) {
+            console.log("25 Motorbike level attack");
+            lvlFactory = LVL_25_FACTORY;
+            lvlAttack = new MotorbikeAttack();
+            noValidate = true; // do not check validate due to it does not work on the testnet
+        } else if (lvlNumber_ == 26) {
+            console.log("26 Double Entry Point level attack");
+            lvlFactory = LVL_26_FACTORY;
+            lvlAttack = new DoubleEntryPointAttack();
+        } else if (lvlNumber_ == 27) {
+            console.log("27 Good Samaritan level attack");
+            lvlFactory = LVL_27_FACTORY;
+            lvlAttack = new GoodSamaritanAttack();
+        } else if (lvlNumber_ == 28) {
+            console.log("28 Gate Keeper Three level attack");
+            lvlFactory = LVL_28_FACTORY;
+            lvlAttack = new GateKeeperThreeAttack();
+        } else if (lvlNumber_ == 29) {
+            console.log("29 Switch level attack");
+            lvlFactory = LVL_29_FACTORY;
+            lvlAttack = new SwitchAttack();
         } else {
             revert("Not implemented");
         }
@@ -322,4 +366,6 @@ interface ILevelFactory {
         address payable _instance,
         address _player
     ) external returns (bool);
+
+    function engines(address) external returns (address);
 }
