@@ -9,11 +9,11 @@ interface Building {
 }
 
 contract ElevatorAttack is Broadcasted, Building {
-    bool public c_firstTime = true;
+    bool public s_firstTime = true;
 
     function isLastFloor(uint) external override returns (bool) {
-        if (c_firstTime) {
-            c_firstTime = false;
+        if (s_firstTime) {
+            s_firstTime = false;
             return false;
         }
         return true;
