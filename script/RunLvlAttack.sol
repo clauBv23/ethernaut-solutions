@@ -79,7 +79,7 @@ contract RunLvlAttack is Script {
     // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
 
     function run(uint256 lvlNumber_) public {
-        vm.startBroadcast();
+        vm.startBroadcast(tx.origin);
         (
             address _lvlFactory,
             Broadcasted _attackCtr,
@@ -94,7 +94,7 @@ contract RunLvlAttack is Script {
 
         // attack lvl instance
         if (_needBroadcast) {
-            vm.startBroadcast();
+            vm.startBroadcast(tx.origin);
         }
         attackLevel(_lvlInstance, _attackCtr, _callValue, lvlNumber_);
         if (_needBroadcast) {
@@ -102,7 +102,7 @@ contract RunLvlAttack is Script {
         }
 
         // check lvl succeeded
-        vm.startBroadcast();
+        vm.startBroadcast(tx.origin);
         submitLevel(_lvlFactory, _lvlInstance);
         vm.stopBroadcast();
     }
@@ -118,7 +118,7 @@ contract RunLvlAttack is Script {
         );
         Vm.Log[] memory _entries = vm.getRecordedLogs();
         uint256 _entriesLength = _entries.length - 1;
-        require(_entries.length > 0, "No event emited");
+        require(_entries.length > 0, "No event emitted");
         require(
             _entries[_entriesLength].topics[0] ==
                 keccak256("LevelInstanceCreatedLog(address,address,address)"),
@@ -137,7 +137,7 @@ contract RunLvlAttack is Script {
         require(
             ILevelFactory(lvlFactory_).validateInstance(
                 payable(lvlInstance_),
-                msg.sender
+                tx.origin
             )
         );
         // submit lvl instance
@@ -161,7 +161,7 @@ contract RunLvlAttack is Script {
                 //need extra configuration for approval
                 INaughtCoin(lvlInstance_).approve(
                     address(attackCtr_),
-                    INaughtCoin(lvlInstance_).balanceOf(msg.sender)
+                    INaughtCoin(lvlInstance_).balanceOf(tx.origin)
                 );
             }
             attackCtr_.broadcastedAttack{value: value_}(payable(lvlInstance_));

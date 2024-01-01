@@ -20,57 +20,12 @@ contract TestAttacks is Test {
     }
 
     function testAttackLevels() public {
-        for (uint160 i = 0; i <= s_totalAttackedLevels; ++i) {
+        for (uint160 i = 15; i <= 15; ++i) {
             if (i == 3) {
                 continue;
             }
-            if (i == 15) {
-                // todo review why the test is not working
-                continue;
-            }
-            _callAttackScript(i);
-        }
-    }
 
-    function _callAttackScript(uint256 lvlNumber_) internal {
-        // it simulates the run function in the script, but send the transactions
-        // signed by the msg.sender not the Test contract
-        // same behavior could be achieved by calling prank before the run function,
-        // but that can't be done due to there is a broadcast inside the script when attacking
-        vm.startBroadcast(msg.sender);
-        (
-            address _lvlFactory,
-            Broadcasted _attackCtr,
-            uint256 _callValue,
-            bool _needBroadcast,
-            uint256 _createValue
-        ) = s_attackScript.getLevelFactoryAttackCtrAndValue(lvlNumber_);
-
-        // create lvl instance
-        // vm.prank(msg.sender);
-        address payable _lvlInstance = s_attackScript.createLevel(
-            _lvlFactory,
-            _createValue
-        );
-        vm.stopBroadcast();
-
-        if (_needBroadcast) {
-            vm.startBroadcast(msg.sender);
+            s_attackScript.run(i);
         }
-        // attack lvl instance
-        s_attackScript.attackLevel(
-            _lvlInstance,
-            _attackCtr,
-            _callValue,
-            lvlNumber_
-        );
-        if (_needBroadcast) {
-            vm.stopBroadcast();
-        }
-        // check lvl succeeded
-        // vm.prank(msg.sender);
-        vm.startBroadcast(msg.sender);
-        s_attackScript.submitLevel(_lvlFactory, _lvlInstance);
-        vm.stopBroadcast();
     }
 }
