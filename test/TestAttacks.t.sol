@@ -25,7 +25,8 @@ contract TestAttacks is Test {
                 continue;
             }
 
-            s_attackScript.run(i);
+            // chain 0 is sepolia chain other mumbai
+            s_attackScript.run(1, i);
         }
     }
 }
