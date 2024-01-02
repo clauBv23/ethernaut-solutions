@@ -224,6 +224,7 @@ contract RunLvlAttack is Script {
             console.log("03 Coin Flip level attack");
             lvlFactory = LVL_3_FACTORY;
             lvlAttack = new CoinFlipAttack();
+            revert("Not implemented on foundry");
         } else if (lvlNumber_ == 4) {
             console.log("04 Telephone level attack");
             lvlFactory = LVL_4_FACTORY;
