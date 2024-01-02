@@ -1,66 +1,38 @@
-## Foundry
+## Ethernaut Solutions
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
 
-Foundry consists of:
-
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+This project aims to streamline the completion of Ethernaut levels by providing automated scripts for executing attacks effortlessly. Ethernaut, offers a series of challenges called levels that require participants to identify vulnerabilities and exploit them. This project simplifies the process by automating the execution of attacks, allowing users to focus on understanding the vulnerabilities rather than dealing with manual steps. 
+Even though I strongly recommend going over all levels in detail to improve personal knowledge.
 
 ## Documentation
 
 https://book.getfoundry.sh/
 
-## Usage
+## How to use
 
-### Build
+Once the repository is cloned, will have to configure the customized script parameters such as Ethereum wallet addresses, private keys, or any environment-specific details. 
 
-```shell
-$ forge build
-```
+Create a `.evn` file similar to `.env.example`. 
 
-### Test
+IMPORTANT: Make sure you have that new file in your `.gitignore`.
 
-```shell
-$ forge test
-```
 
-### Format
+Run the provided scripts for the desired Ethernaut level. 
+
+To check the level will work correctly run 
 
 ```shell
-$ forge fmt
+$ make test-attack lvl= <lvlNumber>
 ```
 
-### Gas Snapshots
+And to run the attack 
+
 
 ```shell
-$ forge snapshot
+$ make run-attack lvl= <lvlNumber>
 ```
 
-### Anvil
+## Contributions
 
-```shell
-$ anvil
-```
+Contributions to the project are welcome. Users can submit additional automation scripts for new levels or improvements to existing ones. The project encourages collaboration and the sharing of knowledge within the Ethereum security community.
 
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
