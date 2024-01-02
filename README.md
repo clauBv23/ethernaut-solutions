@@ -4,9 +4,11 @@
 This project aims to streamline the completion of Ethernaut levels by providing automated scripts for executing attacks effortlessly. Ethernaut, offers a series of challenges called levels that require participants to identify vulnerabilities and exploit them. This project simplifies the process by automating the execution of attacks, allowing users to focus on understanding the vulnerabilities rather than dealing with manual steps. 
 Even though I strongly recommend going over all levels in detail to improve personal knowledge.
 
-## Documentation
 
-https://book.getfoundry.sh/
+## Requirements 
+
+## Documentation
+The only requirement is Foundry, take a look at [the official documentation](https://book.getfoundry.sh/) in case don't know how it works
 
 ## How to use
 
