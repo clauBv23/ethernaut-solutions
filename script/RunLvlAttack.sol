@@ -219,13 +219,12 @@ contract RunLvlAttack is Script {
             console.log("02 Fallout level attack");
             lvlFactory = LVL_2_FACTORY;
             lvlAttack = new FalloutAttack();
-        }
-        // else if (lvlNumber_ == 3) {
-        // todo lvl3 need calls on different blocks look a workaround
-        //     console.log("03 Coin Flip level attack");
-        //     return (LVL_3_FACTORY, new CoinFlipAttack(), 0);
-        // }
-        else if (lvlNumber_ == 4) {
+        } else if (lvlNumber_ == 3) {
+            // todo lvl3 need calls on different blocks look a workaround
+            console.log("03 Coin Flip level attack");
+            lvlFactory = LVL_3_FACTORY;
+            lvlAttack = new CoinFlipAttack();
+        } else if (lvlNumber_ == 4) {
             console.log("04 Telephone level attack");
             lvlFactory = LVL_4_FACTORY;
             lvlAttack = new TelephoneAttack();
@@ -346,6 +345,8 @@ contract RunLvlAttack is Script {
             console.log("28 Gate Keeper Three level attack");
             lvlFactory = LVL_28_FACTORY;
             lvlAttack = new GateKeeperThreeAttack();
+            needBroadcast = true;
+            callValue = 2 * s_initialDeposit;
         } else if (lvlNumber_ == 29) {
             console.log("29 Switch level attack");
             lvlFactory = LVL_29_FACTORY;
