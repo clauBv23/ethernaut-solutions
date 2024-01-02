@@ -40,75 +40,98 @@ import {SwitchAttack} from "./LevelAttacks/29Switch.sol";
 contract RunLvlAttack is Script {
     uint256 constant s_someEther = 0.00001 ether;
     uint256 constant s_initialDeposit = 0.001 ether;
-    // address in Sepolia
-    address constant ETHERNAUT_CTR = 0xa3e7317E591D5A0F1c605be1b3aC4D2ae56104d6;
-    address constant LVL_0_FACTORY = 0x7E0f53981657345B31C59aC44e9c21631Ce710c7;
-    address constant LVL_1_FACTORY = 0x3c34A342b2aF5e885FcaA3800dB5B205fEfa3ffB;
-    address constant LVL_2_FACTORY = 0x676e57FdBbd8e5fE1A7A3f4Bb1296dAC880aa639;
-    address constant LVL_3_FACTORY = 0xA62fE5344FE62AdC1F356447B669E9E6D10abaaF;
-    address constant LVL_4_FACTORY = 0x2C2307bb8824a0AbBf2CC7D76d8e63374D2f8446;
-    address constant LVL_5_FACTORY = 0x478f3476358Eb166Cb7adE4666d04fbdDB56C407;
-    address constant LVL_6_FACTORY = 0x73379d8B82Fda494ee59555f333DF7D44483fD58;
-    address constant LVL_7_FACTORY = 0xb6c2Ec883DaAac76D8922519E63f875c2ec65575;
-    address constant LVL_8_FACTORY = 0xB7257D8Ba61BD1b3Fb7249DCd9330a023a5F3670;
-    address constant LVL_9_FACTORY = 0x3049C00639E6dfC269ED1451764a046f7aE500c6;
-    address constant LVL_10_FACTORY =
-        0x2a24869323C0B13Dff24E196Ba072dC790D52479;
-    address constant LVL_11_FACTORY =
-        0x6DcE47e94Fa22F8E2d8A7FDf538602B1F86aBFd2;
-    address constant LVL_12_FACTORY =
-        0x131c3249e115491E83De375171767Af07906eA36;
-    address constant LVL_13_FACTORY =
-        0xb5858B8EDE0030e46C0Ac1aaAedea8Fb71EF423C;
-    address constant LVL_14_FACTORY =
-        0x0C791D1923c738AC8c4ACFD0A60382eE5FF08a23;
-    address constant LVL_15_FACTORY =
-        0x80934BE6B8B872B364b470Ca30EaAd8AEAC4f63F;
-    address constant LVL_16_FACTORY =
-        0x7ae0655F0Ee1e7752D7C62493CEa1E69A810e2ed;
-    address constant LVL_17_FACTORY =
-        0xAF98ab8F2e2B24F42C661ed023237f5B7acAB048;
-    address constant LVL_18_FACTORY =
-        0x2132C7bc11De7A90B87375f282d36100a29f97a9;
-    address constant LVL_19_FACTORY =
-        0x0BC04aa6aaC163A6B3667636D798FA053D43BD11;
-    address constant LVL_20_FACTORY =
-        0x2427aF06f748A6adb651aCaB0cA8FbC7EaF802e6;
-    address constant LVL_21_FACTORY =
-        0x691eeA9286124c043B82997201E805646b76351a;
-    address constant LVL_22_FACTORY =
-        0xB468f8e42AC0fAe675B56bc6FDa9C0563B61A52F;
-    address constant LVL_23_FACTORY =
-        0xf59112032D54862E199626F55cFad4F8a3b0Fce9;
-    address constant LVL_24_FACTORY =
-        0x725595BA16E76ED1F6cC1e1b65A88365cC494824;
-    address constant LVL_25_FACTORY =
-        0x3A78EE8462BD2e31133de2B8f1f9CBD973D6eDd6;
-    address constant LVL_26_FACTORY =
-        0x34bD06F195756635a10A7018568E033bC15F3FB5;
-    address constant LVL_27_FACTORY =
-        0x36E92B2751F260D6a4749d7CA58247E7f8198284;
-    address constant LVL_28_FACTORY =
-        0x653239b3b3E67BC0ec1Df7835DA2d38761FfD882;
-    address constant LVL_29_FACTORY =
-        0xb2aBa0e156C905a9FAEc24805a009d99193E3E53;
 
-    // todo could be easier to use but will imply storing all levels on storage
-    // mapping(uint256 lvlNumber => address lvlFactory) lvlFactories;
+    address[30] SEPOLIA_FACTORIES = [
+        0x7E0f53981657345B31C59aC44e9c21631Ce710c7, // lvl 0
+        0x3c34A342b2aF5e885FcaA3800dB5B205fEfa3ffB, // lvl 1
+        0x676e57FdBbd8e5fE1A7A3f4Bb1296dAC880aa639, // lvl 2
+        0xA62fE5344FE62AdC1F356447B669E9E6D10abaaF, // lvl 3
+        0x2C2307bb8824a0AbBf2CC7D76d8e63374D2f8446, // lvl 4
+        0x478f3476358Eb166Cb7adE4666d04fbdDB56C407, // lvl 5
+        0x73379d8B82Fda494ee59555f333DF7D44483fD58, // lvl 6
+        0xb6c2Ec883DaAac76D8922519E63f875c2ec65575, // lvl 7
+        0xB7257D8Ba61BD1b3Fb7249DCd9330a023a5F3670, // lvl 8
+        0x3049C00639E6dfC269ED1451764a046f7aE500c6, // lvl 9
+        0x2a24869323C0B13Dff24E196Ba072dC790D52479, // lvl 10
+        0x6DcE47e94Fa22F8E2d8A7FDf538602B1F86aBFd2, // lvl 11
+        0x131c3249e115491E83De375171767Af07906eA36, // lvl 12
+        0xb5858B8EDE0030e46C0Ac1aaAedea8Fb71EF423C, // lvl 13
+        0x0C791D1923c738AC8c4ACFD0A60382eE5FF08a23, // lvl 14
+        0x80934BE6B8B872B364b470Ca30EaAd8AEAC4f63F, // lvl 15
+        0x7ae0655F0Ee1e7752D7C62493CEa1E69A810e2ed, // lvl 16
+        0xAF98ab8F2e2B24F42C661ed023237f5B7acAB048, // lvl 17
+        0x2132C7bc11De7A90B87375f282d36100a29f97a9, // lvl 18
+        0x0BC04aa6aaC163A6B3667636D798FA053D43BD11, // lvl 19
+        0x2427aF06f748A6adb651aCaB0cA8FbC7EaF802e6, // lvl 20
+        0x691eeA9286124c043B82997201E805646b76351a, // lvl 21
+        0xB468f8e42AC0fAe675B56bc6FDa9C0563B61A52F, // lvl 22
+        0xf59112032D54862E199626F55cFad4F8a3b0Fce9, // lvl 23
+        0x725595BA16E76ED1F6cC1e1b65A88365cC494824, // lvl 24
+        0x3A78EE8462BD2e31133de2B8f1f9CBD973D6eDd6, // lvl 25
+        0x34bD06F195756635a10A7018568E033bC15F3FB5, // lvl 26
+        0x36E92B2751F260D6a4749d7CA58247E7f8198284, // lvl 27
+        0x653239b3b3E67BC0ec1Df7835DA2d38761FfD882, // lvl 28
+        0xb2aBa0e156C905a9FAEc24805a009d99193E3E53 // lvl 29
+    ];
 
-    function run(uint256 lvlNumber_) public {
+    address[30] MUMBAI_FACTORIES = [
+        0x3049C00639E6dfC269ED1451764a046f7aE500c6, // lvl 0
+        0x2a24869323C0B13Dff24E196Ba072dC790D52479, // lvl 1
+        0xD2e5e0102E55a5234379DD796b8c641cd5996Efd, // lvl 2
+        0x90501cC20b65f603f847398740eaC4C9BE4873a9, // lvl 3
+        0x131c3249e115491E83De375171767Af07906eA36, // lvl 4
+        0xbF361Efe3FcEc9c0139dEdAEDe1a76539b288935, // lvl 5
+        0xBA97454449c10a0F04297022646E7750b8954EE8, // lvl 6
+        0x80934BE6B8B872B364b470Ca30EaAd8AEAC4f63F, // lvl 7
+        0xF0751022c3765f9bCa97b88bF0986BFCAEbC5D9A, // lvl 8
+        0x27bC920e7C426500a0e7D63Bb037800A7288abC1, // lvl 9
+        0x0AFc648f6D22390d6642Ebc7e1579fC480FE2278, // lvl 10
+        0xB4802b28895ec64406e45dB504149bfE79A38A57, // lvl 11
+        0x1ca9f1c518ec5681C2B7F97c7385C0164c3A22Fe, // lvl 12
+        0x46f79002907a025599f355A04A512A6Fd45E671B, // lvl 13
+        0xF781b45d11A37c51aabBa1197B61e6397aDf1f78, // lvl 14
+        0x3A78EE8462BD2e31133de2B8f1f9CBD973D6eDd6, // lvl 15
+        0x725595BA16E76ED1F6cC1e1b65A88365cC494824, // lvl 16
+        0x573eAaf1C1c2521e671534FAA525fAAf0894eCEb, // lvl 17
+        0x4A151908Da311601D967a6fB9f8cFa5A3E88a251, // lvl 18
+        0x78e23A3881e385465F19c1a03E2F9fFEBdAD6045, // lvl 19
+        0x2a2497aE349bCA901Fea458370Bd7dDa594D1D69, // lvl 20
+        0xf59112032D54862E199626F55cFad4F8a3b0Fce9, // lvl 21
+        0x36E92B2751F260D6a4749d7CA58247E7f8198284, // lvl 22
+        0x2754fA769d47ACdF1f6cDAa4B0A8Ca4eEba651eC, // lvl 23
+        0xb4B157C7c4b0921065Dded675dFe10759EecaA6D, // lvl 24
+        0xFe18db6501719Ab506683656AAf2F80243F8D0c0, // lvl 25
+        0x40055E69E7EB12620c8CCBCCAb1F187883301c30, // lvl 26
+        0xD0a78dB26AA59694f5Cb536B50ef2fa00155C488, // lvl 27
+        0xbB92E7731Be39dE76170cAe5e34F116b7A3C8a11, // lvl 28
+        0x606128539E98E0d0119b29Be2db797D1f9e291F9 // lvl 29
+    ];
+
+    // Sepolia chain 0
+    address constant SEPOLIA_ETHERNAUT_CTR =
+        0xa3e7317E591D5A0F1c605be1b3aC4D2ae56104d6;
+    // Mumbai chain not 0
+    address constant MUMBAI_ETHERNAUT_CTR =
+        0x73379d8B82Fda494ee59555f333DF7D44483fD58;
+
+    function run(uint256 chain_, uint256 lvlNumber_) public {
         vm.startBroadcast(tx.origin);
         (
+            address _ethernautCtr,
             address _lvlFactory,
             Broadcasted _attackCtr,
             uint256 _callValue,
             bool _needBroadcast,
             uint256 _createValue,
             bool _noValidate
-        ) = getLevelFactoryAttackCtrAndValue(lvlNumber_);
+        ) = getLevelFactoryAttackCtrAndValue(chain_, lvlNumber_);
 
         // create lvl instance
-        address payable _lvlInstance = createLevel(_lvlFactory, _createValue);
+        address payable _lvlInstance = createLevel(
+            _ethernautCtr,
+            _lvlFactory,
+            _createValue
+        );
         vm.stopBroadcast();
 
         // attack lvl instance
@@ -122,17 +145,18 @@ contract RunLvlAttack is Script {
 
         // check lvl succeeded
         vm.startBroadcast(tx.origin);
-        submitLevel(_lvlFactory, _lvlInstance, _noValidate);
+        submitLevel(_ethernautCtr, _lvlFactory, _lvlInstance, _noValidate);
         vm.stopBroadcast();
     }
 
     function createLevel(
+        address ethernautCtr_,
         address lvlFactory_,
         uint256 createValue_
     ) public returns (address payable) {
         // get lvl instance
         vm.recordLogs();
-        IEthernaut(ETHERNAUT_CTR).createLevelInstance{value: createValue_}(
+        IEthernaut(ethernautCtr_).createLevelInstance{value: createValue_}(
             lvlFactory_
         );
         Vm.Log[] memory _entries = vm.getRecordedLogs();
@@ -152,6 +176,7 @@ contract RunLvlAttack is Script {
     }
 
     function submitLevel(
+        address ethernautCtr_,
         address lvlFactory_,
         address lvlInstance_,
         bool noValidate_
@@ -166,7 +191,7 @@ contract RunLvlAttack is Script {
             );
         }
         // submit lvl instance
-        IEthernaut(ETHERNAUT_CTR).submitLevelInstance(payable(lvlInstance_));
+        IEthernaut(ethernautCtr_).submitLevelInstance(payable(lvlInstance_));
     }
 
     function attackLevel(
@@ -194,10 +219,12 @@ contract RunLvlAttack is Script {
     }
 
     function getLevelFactoryAttackCtrAndValue(
+        uint256 chain_,
         uint256 lvlNumber_
     )
         public
         returns (
+            address ethernautCtr,
             address lvlFactory,
             Broadcasted lvlAttack,
             uint256 callValue,
@@ -206,151 +233,159 @@ contract RunLvlAttack is Script {
             bool noValidate
         )
     {
+        lvlFactory = chain_ == 0
+            ? SEPOLIA_FACTORIES[lvlNumber_]
+            : MUMBAI_FACTORIES[lvlNumber_];
+
+        ethernautCtr = chain_ == 0
+            ? SEPOLIA_ETHERNAUT_CTR
+            : MUMBAI_ETHERNAUT_CTR;
+
         if (lvlNumber_ == 0) {
             console.log("00 Hello level attack");
-            lvlFactory = LVL_0_FACTORY;
+            // lvlFactory = LVL_0_FACTORY;
             lvlAttack = new HelloAttack();
         } else if (lvlNumber_ == 1) {
             console.log("01 Fallback level attack");
-            lvlFactory = LVL_1_FACTORY;
+            // lvlFactory = LVL_1_FACTORY;
             lvlAttack = new FallbackAttack();
             callValue = 2 * s_someEther;
         } else if (lvlNumber_ == 2) {
             console.log("02 Fallout level attack");
-            lvlFactory = LVL_2_FACTORY;
+            // lvlFactory = LVL_2_FACTORY;
             lvlAttack = new FalloutAttack();
         } else if (lvlNumber_ == 3) {
             // todo lvl3 need calls on different blocks look a workaround
             console.log("03 Coin Flip level attack");
-            lvlFactory = LVL_3_FACTORY;
+            // lvlFactory = LVL_3_FACTORY;
             lvlAttack = new CoinFlipAttack();
             revert("Not implemented on foundry");
         } else if (lvlNumber_ == 4) {
             console.log("04 Telephone level attack");
-            lvlFactory = LVL_4_FACTORY;
+            // lvlFactory = LVL_4_FACTORY;
             lvlAttack = new TelephoneAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 5) {
             console.log("05 Token level attack");
-            lvlFactory = LVL_5_FACTORY;
+            // lvlFactory = LVL_5_FACTORY;
             lvlAttack = new TokenAttack();
         } else if (lvlNumber_ == 6) {
             console.log("06 Delegation level attack");
-            lvlFactory = LVL_6_FACTORY;
+            // lvlFactory = LVL_6_FACTORY;
             lvlAttack = new DelegationAttack();
         } else if (lvlNumber_ == 7) {
             console.log("07 Force level attack");
-            lvlFactory = LVL_7_FACTORY;
+            // lvlFactory = LVL_7_FACTORY;
             lvlAttack = new ForceAttack{value: s_someEther}();
             needBroadcast = true;
         } else if (lvlNumber_ == 8) {
             console.log("08 Vault level attack");
-            lvlFactory = LVL_8_FACTORY;
+            // lvlFactory = LVL_8_FACTORY;
             lvlAttack = new VaultAttack();
         } else if (lvlNumber_ == 9) {
             console.log("09 King level attack");
-            lvlFactory = LVL_9_FACTORY;
+            // lvlFactory = LVL_9_FACTORY;
             lvlAttack = new KingAttack();
             callValue = s_initialDeposit;
             needBroadcast = true;
             createValue = s_initialDeposit;
         } else if (lvlNumber_ == 10) {
             console.log("10 Reentrancy level attack");
-            lvlFactory = LVL_10_FACTORY;
+            // lvlFactory = LVL_10_FACTORY;
             lvlAttack = new ReentrancyAttack();
             callValue = s_initialDeposit;
             needBroadcast = true;
             createValue = s_initialDeposit;
         } else if (lvlNumber_ == 11) {
             console.log("11 Elevator level attack");
-            lvlFactory = LVL_11_FACTORY;
+            // lvlFactory = LVL_11_FACTORY;
             lvlAttack = new ElevatorAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 12) {
             console.log("12 Privacy level attack");
-            lvlFactory = LVL_12_FACTORY;
+            // lvlFactory = LVL_12_FACTORY;
             lvlAttack = new PrivacyAttack();
         } else if (lvlNumber_ == 13) {
             console.log("13 Gate Keeper One level attack");
-            lvlFactory = LVL_13_FACTORY;
+            // lvlFactory = LVL_13_FACTORY;
             lvlAttack = new GatekeeperOneAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 14) {
             console.log("14 Gate Keeper Two level attack");
-            lvlFactory = LVL_14_FACTORY;
+            // lvlFactory = LVL_14_FACTORY;
             // lvlAttack = new GatekeeperTwoAttack();  no create the contract cuz the attack is in the constructor
             needBroadcast = true;
         } else if (lvlNumber_ == 15) {
             console.log("15 Naught Coin level attack");
-            lvlFactory = LVL_15_FACTORY;
+            // lvlFactory = LVL_15_FACTORY;
             lvlAttack = new NaughtCoinAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 16) {
             console.log("16 Preservation level attack");
-            lvlFactory = LVL_16_FACTORY;
+            // lvlFactory = LVL_16_FACTORY;
             lvlAttack = new PreservationAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 17) {
             console.log("17 Recovery level attack");
-            lvlFactory = LVL_17_FACTORY;
+            // lvlFactory = LVL_17_FACTORY;
             lvlAttack = new RecoveryAttack();
             createValue = s_initialDeposit;
         } else if (lvlNumber_ == 18) {
             console.log("18 Magic Number level attack");
-            lvlFactory = LVL_18_FACTORY;
+            // lvlFactory = LVL_18_FACTORY;
             lvlAttack = new MagicNumberAttack();
         } else if (lvlNumber_ == 19) {
             console.log("19 Alien Codex level attack");
-            lvlFactory = LVL_19_FACTORY;
+            // lvlFactory = LVL_19_FACTORY;
             lvlAttack = new AlienCodexAttack();
         } else if (lvlNumber_ == 20) {
             console.log("20 Denial level attack");
-            lvlFactory = LVL_20_FACTORY;
+            // lvlFactory = LVL_20_FACTORY;
             lvlAttack = new DenialAttack();
             createValue = s_initialDeposit;
         } else if (lvlNumber_ == 21) {
             console.log("21 Shop level attack");
-            lvlFactory = LVL_21_FACTORY;
+            // lvlFactory = LVL_21_FACTORY;
             lvlAttack = new ShopAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 22) {
             console.log("22 Dex level attack");
-            lvlFactory = LVL_22_FACTORY;
+            // lvlFactory = LVL_22_FACTORY;
             lvlAttack = new DexAttack();
         } else if (lvlNumber_ == 23) {
             console.log("23 Dex Two level attack");
-            lvlFactory = LVL_23_FACTORY;
+            // lvlFactory = LVL_23_FACTORY;
             lvlAttack = new DexTwoAttack();
         } else if (lvlNumber_ == 24) {
             console.log("24 Puzzle Wallet level attack");
-            lvlFactory = LVL_24_FACTORY;
+            // lvlFactory = LVL_24_FACTORY;
             lvlAttack = new PuzzleWalletAttack();
             createValue = s_initialDeposit;
             callValue = s_initialDeposit;
             needBroadcast = true;
         } else if (lvlNumber_ == 25) {
             console.log("25 Motorbike level attack");
-            lvlFactory = LVL_25_FACTORY;
+            // lvlFactory = LVL_25_FACTORY;
             lvlAttack = new MotorbikeAttack();
             noValidate = true; // do not check validate due to it does not work on the testnet
         } else if (lvlNumber_ == 26) {
             console.log("26 Double Entry Point level attack");
-            lvlFactory = LVL_26_FACTORY;
+            // lvlFactory = LVL_26_FACTORY;
             lvlAttack = new DoubleEntryPointAttack();
         } else if (lvlNumber_ == 27) {
             console.log("27 Good Samaritan level attack");
-            lvlFactory = LVL_27_FACTORY;
+            // lvlFactory = LVL_27_FACTORY;
             lvlAttack = new GoodSamaritanAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 28) {
             console.log("28 Gate Keeper Three level attack");
-            lvlFactory = LVL_28_FACTORY;
+            // lvlFactory = LVL_28_FACTORY;
             lvlAttack = new GateKeeperThreeAttack();
             needBroadcast = true;
             callValue = 2 * s_initialDeposit;
         } else if (lvlNumber_ == 29) {
             console.log("29 Switch level attack");
-            lvlFactory = LVL_29_FACTORY;
+            // lvlFactory = LVL_29_FACTORY;
             lvlAttack = new SwitchAttack();
         } else {
             revert("Not implemented");
