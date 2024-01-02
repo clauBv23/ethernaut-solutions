@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.19;
 
-import {Broadcasted} from "./Helper/Broadcasted.sol";
+import {Broadcasted} from "./Helper/Broadcasted.s.sol";
 
 // ! I was not able to make it work on a foundry script
 // ! ended up using the remix IDE to deploy the contract and call the attack function

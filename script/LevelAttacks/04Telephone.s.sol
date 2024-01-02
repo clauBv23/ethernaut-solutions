@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.19;
 
-import {Broadcasted} from "./Helper/Broadcasted.sol";
+import {Broadcasted} from "./Helper/Broadcasted.s.sol";
 
 contract TelephoneAttack is Broadcasted {
     function attack(address payable telephoneCtr_) public payable override {

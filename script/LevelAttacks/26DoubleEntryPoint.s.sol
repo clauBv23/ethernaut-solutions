@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.19;
 
-import {Broadcasted} from "./Helper/Broadcasted.sol";
+import {Broadcasted} from "./Helper/Broadcasted.s.sol";
 
 import {console} from "forge-std/Console.sol";
 

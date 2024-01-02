@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.19;
 
-import {Broadcasted} from "./Helper/Broadcasted.sol";
+import {Broadcasted} from "./Helper/Broadcasted.s.sol";
 
 contract DenialAttack is Broadcasted {
     function attack(address payable denialCtr_) public payable override {

@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.19;
 
-import {Broadcasted} from "./Helper/Broadcasted.sol";
+import {Broadcasted} from "./Helper/Broadcasted.s.sol";
 
 contract GatekeeperTwoAttack is Broadcasted {
     constructor(address payable gateKeeperOneCtr_) {
