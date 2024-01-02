@@ -8,7 +8,7 @@ Even though I strongly recommend going over all levels in detail to improve pers
 ## Requirements 
 
 ## Documentation
-The only requirement is Foundry, take a look at [the official documentation](https://book.getfoundry.sh/) in case don't know how it works
+The only requirement is Foundry, take a look at [the official documentation](https://book.getfoundry.sh/) in case don't know how it works.
 
 ## How to use
 
