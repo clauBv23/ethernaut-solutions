@@ -27,6 +27,7 @@ contract TestAttacks is Test {
 
             // chain 0 is sepolia chain other mumbai
             s_attackScript.run(1, i);
+            // todo find a way to tets on both chains
         }
     }
 }
