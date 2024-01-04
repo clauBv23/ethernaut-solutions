@@ -13,9 +13,9 @@ contract TestAttacks is Test {
     uint256 constant STARTING_BALANCE = 10 ether;
 
     function setUp() external {
+        vm.createSelectFork(vm.rpcUrl("sepolia"));
         s_attackScript = new RunLvlAttack();
         // funding attack script contract and msg.sender
-        vm.deal(msg.sender, STARTING_BALANCE);
         vm.deal(address(s_attackScript), STARTING_BALANCE);
     }
 
@@ -26,8 +26,7 @@ contract TestAttacks is Test {
             }
 
             // chain 0 is sepolia chain other mumbai
-            s_attackScript.run(1, i);
-            // todo find a way to tets on both chains
+            s_attackScript.run(0, i);
         }
     }
 }
