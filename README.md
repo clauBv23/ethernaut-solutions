@@ -38,3 +38,6 @@ $ make run-attack lvl= <lvlNumber>
 
 Contributions to the project are welcome. Users can submit additional automation scripts for new levels or improvements to existing ones. The project encourages collaboration and the sharing of knowledge within the Ethereum security community.
 
+## Note
+this repo solutions brings me up to the top of the [Ethernaut Leaderboard](https://ethernaut.openzeppelin.com/leaderboard).
+![Ethernaut Leaderboard](pic.png)
