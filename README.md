@@ -29,7 +29,6 @@ $ make test-attack lvl= <lvlNumber>
 
 And to run the attack 
 
-
 ```shell
 $ make run-attack lvl= <lvlNumber>
 ```
