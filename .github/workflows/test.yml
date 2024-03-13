@@ -33,4 +33,7 @@ jobs:
       - name: Run Forge tests
         run: |
           forge test -vvv
+        env:
+          SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
+          MUMBAI_RPC_URL: ${{ secrets.MUMBAI_RPC_URL }}
         id: test
