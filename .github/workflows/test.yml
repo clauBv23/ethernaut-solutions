@@ -51,6 +51,6 @@ jobs:
       - name: Run coverage
         run: forge coverage
       - uses: codecov/codecov-action@v3
-       with:
+        with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
