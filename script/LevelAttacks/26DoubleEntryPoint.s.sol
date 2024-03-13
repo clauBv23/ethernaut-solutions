@@ -4,8 +4,6 @@ pragma solidity ^0.8.19;
 
 import {Broadcasted} from "./Helper/Broadcasted.s.sol";
 
-import {console} from "forge-std/Console.sol";
-
 contract DoubleEntryPointAttack is Broadcasted {
     function attack(
         address payable doubleEntryPointCtr_

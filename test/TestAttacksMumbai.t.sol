@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.19;
 
-import {Test, console} from "forge-std/Test.sol";
+import {Test} from "forge-std/Test.sol";
 
 import {RunLvlAttack} from "../script/RunLvlAttack.s.sol";
 import {Broadcasted} from "../script/LevelAttacks/Helper/Broadcasted.s.sol";

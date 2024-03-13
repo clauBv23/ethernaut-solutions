@@ -243,149 +243,119 @@ contract RunLvlAttack is Script {
 
         if (lvlNumber_ == 0) {
             console.log("00 Hello level attack");
-            // lvlFactory = LVL_0_FACTORY;
             lvlAttack = new HelloAttack();
         } else if (lvlNumber_ == 1) {
             console.log("01 Fallback level attack");
-            // lvlFactory = LVL_1_FACTORY;
             lvlAttack = new FallbackAttack();
             callValue = 2 * s_someEther;
         } else if (lvlNumber_ == 2) {
             console.log("02 Fallout level attack");
-            // lvlFactory = LVL_2_FACTORY;
             lvlAttack = new FalloutAttack();
         } else if (lvlNumber_ == 3) {
             // todo lvl3 need calls on different blocks look a workaround
             console.log("03 Coin Flip level attack");
-            // lvlFactory = LVL_3_FACTORY;
             lvlAttack = new CoinFlipAttack();
             revert("Not implemented on foundry");
         } else if (lvlNumber_ == 4) {
             console.log("04 Telephone level attack");
-            // lvlFactory = LVL_4_FACTORY;
             lvlAttack = new TelephoneAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 5) {
             console.log("05 Token level attack");
-            // lvlFactory = LVL_5_FACTORY;
             lvlAttack = new TokenAttack();
         } else if (lvlNumber_ == 6) {
             console.log("06 Delegation level attack");
-            // lvlFactory = LVL_6_FACTORY;
             lvlAttack = new DelegationAttack();
         } else if (lvlNumber_ == 7) {
             console.log("07 Force level attack");
-            // lvlFactory = LVL_7_FACTORY;
             lvlAttack = new ForceAttack{value: s_someEther}();
             needBroadcast = true;
         } else if (lvlNumber_ == 8) {
             console.log("08 Vault level attack");
-            // lvlFactory = LVL_8_FACTORY;
             lvlAttack = new VaultAttack();
         } else if (lvlNumber_ == 9) {
             console.log("09 King level attack");
-            // lvlFactory = LVL_9_FACTORY;
             lvlAttack = new KingAttack();
             callValue = s_initialDeposit;
             needBroadcast = true;
             createValue = s_initialDeposit;
         } else if (lvlNumber_ == 10) {
             console.log("10 Reentrancy level attack");
-            // lvlFactory = LVL_10_FACTORY;
             lvlAttack = new ReentrancyAttack();
             callValue = s_initialDeposit;
             needBroadcast = true;
             createValue = s_initialDeposit;
         } else if (lvlNumber_ == 11) {
             console.log("11 Elevator level attack");
-            // lvlFactory = LVL_11_FACTORY;
             lvlAttack = new ElevatorAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 12) {
             console.log("12 Privacy level attack");
-            // lvlFactory = LVL_12_FACTORY;
             lvlAttack = new PrivacyAttack();
         } else if (lvlNumber_ == 13) {
             console.log("13 Gate Keeper One level attack");
-            // lvlFactory = LVL_13_FACTORY;
             lvlAttack = new GatekeeperOneAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 14) {
             console.log("14 Gate Keeper Two level attack");
-            // lvlFactory = LVL_14_FACTORY;
             // lvlAttack = new GatekeeperTwoAttack();  no create the contract cuz the attack is in the constructor
             needBroadcast = true;
         } else if (lvlNumber_ == 15) {
             console.log("15 Naught Coin level attack");
-            // lvlFactory = LVL_15_FACTORY;
             lvlAttack = new NaughtCoinAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 16) {
             console.log("16 Preservation level attack");
-            // lvlFactory = LVL_16_FACTORY;
             lvlAttack = new PreservationAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 17) {
             console.log("17 Recovery level attack");
-            // lvlFactory = LVL_17_FACTORY;
             lvlAttack = new RecoveryAttack();
             createValue = s_initialDeposit;
         } else if (lvlNumber_ == 18) {
             console.log("18 Magic Number level attack");
-            // lvlFactory = LVL_18_FACTORY;
             lvlAttack = new MagicNumberAttack();
         } else if (lvlNumber_ == 19) {
             console.log("19 Alien Codex level attack");
-            // lvlFactory = LVL_19_FACTORY;
             lvlAttack = new AlienCodexAttack();
         } else if (lvlNumber_ == 20) {
             console.log("20 Denial level attack");
-            // lvlFactory = LVL_20_FACTORY;
             lvlAttack = new DenialAttack();
             createValue = s_initialDeposit;
         } else if (lvlNumber_ == 21) {
             console.log("21 Shop level attack");
-            // lvlFactory = LVL_21_FACTORY;
             lvlAttack = new ShopAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 22) {
             console.log("22 Dex level attack");
-            // lvlFactory = LVL_22_FACTORY;
             lvlAttack = new DexAttack();
         } else if (lvlNumber_ == 23) {
             console.log("23 Dex Two level attack");
-            // lvlFactory = LVL_23_FACTORY;
             lvlAttack = new DexTwoAttack();
         } else if (lvlNumber_ == 24) {
             console.log("24 Puzzle Wallet level attack");
-            // lvlFactory = LVL_24_FACTORY;
             lvlAttack = new PuzzleWalletAttack();
             createValue = s_initialDeposit;
             callValue = s_initialDeposit;
             needBroadcast = true;
         } else if (lvlNumber_ == 25) {
             console.log("25 Motorbike level attack");
-            // lvlFactory = LVL_25_FACTORY;
             lvlAttack = new MotorbikeAttack();
             noValidate = true; // do not check validate due to it does not work on the testnet
         } else if (lvlNumber_ == 26) {
             console.log("26 Double Entry Point level attack");
-            // lvlFactory = LVL_26_FACTORY;
             lvlAttack = new DoubleEntryPointAttack();
         } else if (lvlNumber_ == 27) {
             console.log("27 Good Samaritan level attack");
-            // lvlFactory = LVL_27_FACTORY;
             lvlAttack = new GoodSamaritanAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 28) {
             console.log("28 Gate Keeper Three level attack");
-            // lvlFactory = LVL_28_FACTORY;
             lvlAttack = new GateKeeperThreeAttack();
             needBroadcast = true;
             callValue = 2 * s_initialDeposit;
         } else if (lvlNumber_ == 29) {
             console.log("29 Switch level attack");
-            // lvlFactory = LVL_29_FACTORY;
             lvlAttack = new SwitchAttack();
         } else {
             revert("Not implemented");
