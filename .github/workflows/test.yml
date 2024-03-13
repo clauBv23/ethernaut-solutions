@@ -3,7 +3,6 @@ name: test
 on:  
   push:
 
-
 env:
   FOUNDRY_PROFILE: ci
 
@@ -37,20 +36,18 @@ jobs:
           SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
           MUMBAI_RPC_URL: ${{ secrets.MUMBAI_RPC_URL }}
         id: test
-    
+
   coverage:
-  runs-on: ubuntu-latest
-  env:
-    SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
-    MUMBAI_RPC_URL: ${{ secrets.MUMBAI_RPC_URL }}
-  steps:
-    - uses: actions/checkout@v4
-    - name: Install Foundry
-      uses: foundry-rs/foundry-toolchain@v1
-      with:
-        version: nightly
-    - name: Run coverage
-      run: forge coverage
-    - uses: codecov/codecov-action@v3
-      # with:
-        # token: ${{ secrets.CODECOV_TOKEN }}
+    runs-on: ubuntu-latest
+    env:
+      SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
+      MUMBAI_RPC_URL: ${{ secrets.MUMBAI_RPC_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+      - name: Run coverage
+        run: forge coverage
+      - uses: codecov/codecov-action@v3
