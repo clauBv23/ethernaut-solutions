@@ -1,8 +1,7 @@
 name: test
 
-on: 
-  workflow_dispatch:
-    - push
+on:  
+  push:
 
 
 env:
