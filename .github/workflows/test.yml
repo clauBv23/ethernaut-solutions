@@ -37,10 +37,11 @@ jobs:
           SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
           MUMBAI_RPC_URL: ${{ secrets.MUMBAI_RPC_URL }}
         id: test
+     
       - name: Run Coverage
         run: |
           forge coverage
         env:
           SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
           MUMBAI_RPC_URL: ${{ secrets.MUMBAI_RPC_URL }}
-        id: test
+        uses: codecov/codecov-action@v3
