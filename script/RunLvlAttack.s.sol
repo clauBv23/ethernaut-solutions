@@ -19,7 +19,7 @@ import {KingAttack} from "./LevelAttacks/09King.s.sol";
 import {ReentrancyAttack} from "./LevelAttacks/10Reentrancy.s.sol";
 import {ElevatorAttack} from "./LevelAttacks/11Elevator.s.sol";
 import {PrivacyAttack} from "./LevelAttacks/12Privacy.s.sol";
-import {GatekeeperOneAttack} from "./LevelAttacks/13GatekeeperOne.s.sol";
+// import {GatekeeperOneAttack} from "./LevelAttacks/13GatekeeperOne.s.sol";
 import {GatekeeperTwoAttack} from "./LevelAttacks/14GatekeeperTwo.s.sol";
 import {NaughtCoinAttack, INaughtCoin} from "./LevelAttacks/15NaughtCoin.s.sol";
 import {PreservationAttack} from "./LevelAttacks/16Preservation.s.sol";
@@ -294,7 +294,7 @@ contract RunLvlAttack is Script {
             lvlAttack = new PrivacyAttack();
         } else if (lvlNumber_ == 13) {
             console.log("13 Gate Keeper One level attack");
-            lvlAttack = new GatekeeperOneAttack();
+            // lvlAttack = new GatekeeperOneAttack();
             needBroadcast = true;
         } else if (lvlNumber_ == 14) {
             console.log("14 Gate Keeper Two level attack");
