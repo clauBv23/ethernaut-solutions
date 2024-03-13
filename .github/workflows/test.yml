@@ -37,11 +37,20 @@ jobs:
           SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
           MUMBAI_RPC_URL: ${{ secrets.MUMBAI_RPC_URL }}
         id: test
-     
-      - name: Run Coverage
-        run: |
-          forge coverage
-        env:
-          SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
-          MUMBAI_RPC_URL: ${{ secrets.MUMBAI_RPC_URL }}
-        uses: codecov/codecov-action@v3
+    
+  coverage:
+  runs-on: ubuntu-latest
+  env:
+    SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
+    MUMBAI_RPC_URL: ${{ secrets.MUMBAI_RPC_URL }}
+  steps:
+    - uses: actions/checkout@v4
+    - name: Install Foundry
+      uses: foundry-rs/foundry-toolchain@v1
+      with:
+        version: nightly
+    - name: Run coverage
+      run: forge coverage
+    - uses: codecov/codecov-action@v3
+      # with:
+        # token: ${{ secrets.CODECOV_TOKEN }}
