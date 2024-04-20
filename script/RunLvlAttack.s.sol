@@ -76,47 +76,11 @@ contract RunLvlAttack is Script {
         0xd459773f02e53F6e91b0f766e42E495aEf26088F // lvl 30
     ];
 
-    address[30] MUMBAI_FACTORIES = [
-        0x3049C00639E6dfC269ED1451764a046f7aE500c6, // lvl 0
-        0x2a24869323C0B13Dff24E196Ba072dC790D52479, // lvl 1
-        0xD2e5e0102E55a5234379DD796b8c641cd5996Efd, // lvl 2
-        0x90501cC20b65f603f847398740eaC4C9BE4873a9, // lvl 3
-        0x131c3249e115491E83De375171767Af07906eA36, // lvl 4
-        0xbF361Efe3FcEc9c0139dEdAEDe1a76539b288935, // lvl 5
-        0xBA97454449c10a0F04297022646E7750b8954EE8, // lvl 6
-        0x80934BE6B8B872B364b470Ca30EaAd8AEAC4f63F, // lvl 7
-        0xF0751022c3765f9bCa97b88bF0986BFCAEbC5D9A, // lvl 8
-        0x27bC920e7C426500a0e7D63Bb037800A7288abC1, // lvl 9
-        0x0AFc648f6D22390d6642Ebc7e1579fC480FE2278, // lvl 10
-        0xB4802b28895ec64406e45dB504149bfE79A38A57, // lvl 11
-        0x1ca9f1c518ec5681C2B7F97c7385C0164c3A22Fe, // lvl 12
-        0x46f79002907a025599f355A04A512A6Fd45E671B, // lvl 13
-        0xF781b45d11A37c51aabBa1197B61e6397aDf1f78, // lvl 14
-        0x3A78EE8462BD2e31133de2B8f1f9CBD973D6eDd6, // lvl 15
-        0x725595BA16E76ED1F6cC1e1b65A88365cC494824, // lvl 16
-        0x573eAaf1C1c2521e671534FAA525fAAf0894eCEb, // lvl 17
-        0x4A151908Da311601D967a6fB9f8cFa5A3E88a251, // lvl 18
-        0x78e23A3881e385465F19c1a03E2F9fFEBdAD6045, // lvl 19
-        0x2a2497aE349bCA901Fea458370Bd7dDa594D1D69, // lvl 20
-        0xf59112032D54862E199626F55cFad4F8a3b0Fce9, // lvl 21
-        0x36E92B2751F260D6a4749d7CA58247E7f8198284, // lvl 22
-        0x2754fA769d47ACdF1f6cDAa4B0A8Ca4eEba651eC, // lvl 23
-        0xb4B157C7c4b0921065Dded675dFe10759EecaA6D, // lvl 24
-        0xFe18db6501719Ab506683656AAf2F80243F8D0c0, // lvl 25
-        0x40055E69E7EB12620c8CCBCCAb1F187883301c30, // lvl 26
-        0xD0a78dB26AA59694f5Cb536B50ef2fa00155C488, // lvl 27
-        0xbB92E7731Be39dE76170cAe5e34F116b7A3C8a11, // lvl 28
-        0x606128539E98E0d0119b29Be2db797D1f9e291F9 // lvl 29
-    ];
-
     // Sepolia chain 0
     address constant SEPOLIA_ETHERNAUT_CTR =
         0xa3e7317E591D5A0F1c605be1b3aC4D2ae56104d6;
-    // Mumbai chain not 0
-    address constant MUMBAI_ETHERNAUT_CTR =
-        0x73379d8B82Fda494ee59555f333DF7D44483fD58;
 
-    function run(uint256 chain_, uint256 lvlNumber_) public {
+    function run(uint256 lvlNumber_) public {
         vm.startBroadcast(tx.origin);
         (
             address _ethernautCtr,
@@ -126,7 +90,7 @@ contract RunLvlAttack is Script {
             bool _needBroadcast,
             uint256 _createValue,
             bool _noValidate
-        ) = getLevelFactoryAttackCtrAndValue(chain_, lvlNumber_);
+        ) = getLevelFactoryAttackCtrAndValue(lvlNumber_);
 
         // create lvl instance
         address payable _lvlInstance = createLevel(
@@ -221,7 +185,6 @@ contract RunLvlAttack is Script {
     }
 
     function getLevelFactoryAttackCtrAndValue(
-        uint256 chain_,
         uint256 lvlNumber_
     )
         public
@@ -235,13 +198,8 @@ contract RunLvlAttack is Script {
             bool noValidate
         )
     {
-        lvlFactory = chain_ == 0
-            ? SEPOLIA_FACTORIES[lvlNumber_]
-            : MUMBAI_FACTORIES[lvlNumber_];
-
-        ethernautCtr = chain_ == 0
-            ? SEPOLIA_ETHERNAUT_CTR
-            : MUMBAI_ETHERNAUT_CTR;
+        lvlFactory = SEPOLIA_FACTORIES[lvlNumber_];
+        ethernautCtr = SEPOLIA_ETHERNAUT_CTR;
 
         if (lvlNumber_ == 0) {
             console.log("00 Hello level attack");
