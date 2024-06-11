@@ -103,7 +103,6 @@ contract RunLvlAttack is Script {
         vm.stopBroadcast();
 
         // attack lvl instance
-        console.log("needBroadcast", _needBroadcast);
         if (_needBroadcast) {
             vm.startBroadcast(tx.origin);
         }
