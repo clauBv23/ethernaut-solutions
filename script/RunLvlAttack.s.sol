@@ -37,12 +37,13 @@ import {GoodSamaritanAttack} from "./LevelAttacks/27GoodSamaritan.s.sol";
 import {GateKeeperThreeAttack} from "./LevelAttacks/28GateKeeperThree.s.sol";
 import {SwitchAttack} from "./LevelAttacks/29Switch.s.sol";
 import {HigherOrderAttack} from "./LevelAttacks/30HigherOrder.s.sol";
+import {StakeAttack} from "./LevelAttacks/31Stake.s.sol";
 
 contract RunLvlAttack is Script {
     uint256 constant s_someEther = 0.00001 ether;
     uint256 constant s_initialDeposit = 0.001 ether;
 
-    address[31] SEPOLIA_FACTORIES = [
+    address[32] SEPOLIA_FACTORIES = [
         0x7E0f53981657345B31C59aC44e9c21631Ce710c7, // lvl 0
         0x3c34A342b2aF5e885FcaA3800dB5B205fEfa3ffB, // lvl 1
         0x676e57FdBbd8e5fE1A7A3f4Bb1296dAC880aa639, // lvl 2
@@ -73,7 +74,8 @@ contract RunLvlAttack is Script {
         0x36E92B2751F260D6a4749d7CA58247E7f8198284, // lvl 27
         0x653239b3b3E67BC0ec1Df7835DA2d38761FfD882, // lvl 28
         0xb2aBa0e156C905a9FAEc24805a009d99193E3E53, // lvl 29
-        0xd459773f02e53F6e91b0f766e42E495aEf26088F // lvl 30
+        0xd459773f02e53F6e91b0f766e42E495aEf26088F, // lvl 30
+        0xB99f27b94fCc8b9b6fF88e29E1741422DFC06224 // lvl 31
     ];
 
     // Sepolia chain 0
@@ -101,6 +103,7 @@ contract RunLvlAttack is Script {
         vm.stopBroadcast();
 
         // attack lvl instance
+        console.log("needBroadcast", _needBroadcast);
         if (_needBroadcast) {
             vm.startBroadcast(tx.origin);
         }
@@ -320,6 +323,11 @@ contract RunLvlAttack is Script {
         } else if (lvlNumber_ == 30) {
             console.log("30 Higher Order level attack");
             lvlAttack = new HigherOrderAttack();
+        } else if (lvlNumber_ == 31) {
+            console.log("31 Stake attack");
+            lvlAttack = new StakeAttack();
+            // needBroadcast = true;
+            createValue = s_initialDeposit;
         } else {
             revert("Not implemented");
         }
